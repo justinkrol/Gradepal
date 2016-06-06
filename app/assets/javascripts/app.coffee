@@ -1,0 +1,1 @@
+gradepal = angular.module('receta',[])
