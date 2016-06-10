@@ -7,8 +7,14 @@ gradepal = angular.module 'gradepal',[
   'angular-flash.flash-alert-directive'
 ]
 
-gradepal.config [ '$routeProvider',
-  ($routeProvider)->
+gradepal.config [ '$routeProvider', 'flashProvider',
+  ($routeProvider, flashProvider)->
+
+    flashProvider.errorClassnames.push('alert-danger')
+    flashProvider.warnClassnames.push("alert-warning")
+    flashProvider.infoClassnames.push("alert-info")
+    flashProvider.successClassnames.push("alert-success")
+
     $routeProvider
       .when '/',
         templateUrl: 'index.html'
