@@ -8,4 +8,6 @@ controllers.controller("CoursesController", [ '$scope', '$routeParams', '$locati
       Course.query(keywords: $routeParams.keywords, (results)-> $scope.courses = results)
     else
       $scope.courses = []
+
+    $scope.view = (courseId)-> $location.path("/courses/#{courseId}")
 ])
