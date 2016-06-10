@@ -3,6 +3,8 @@ gradepal = angular.module 'gradepal',[
   'ngRoute',
   'ngResource',
   'controllers',
+  'angular-flash.service',
+  'angular-flash.flash-alert-directive'
 ]
 
 gradepal.config [ '$routeProvider',

@@ -3,6 +3,7 @@ describe 'CourseController', ->
   ctrl          = null
   routeParams   = null
   httpBackend   = null
+  flash         = null
   courseId      = 42
 
   fakeCourse =
@@ -11,12 +12,13 @@ describe 'CourseController', ->
     code: 'MATH 1004'
 
   setupController =(courseExists=true)->
-    inject(($location, $routeParams, $rootScope, $httpBackend, $controller)->
+    inject(($location, $routeParams, $rootScope, $httpBackend, $controller, _flash_)->
       scope       = $rootScope.$new()
       location    = $location
       httpBackend = $httpBackend
       routeParams = $routeParams
       routeParams.courseId = courseId
+      flash       = _flash_
 
       request = new RegExp("\/courses/#{courseId}")
       results =
@@ -47,4 +49,4 @@ describe 'CourseController', ->
       it 'loads the given course', ->
         httpBackend.flush()
         expect(scope.course).toBe(null)
-        # what else?!
+        expect(flash.error).toBe("There is no course with ID #{courseId}")
