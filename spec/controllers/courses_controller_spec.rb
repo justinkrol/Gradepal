@@ -43,4 +43,30 @@ describe CoursesController do
       end
     end
   end
+
+  describe 'show' do
+    before do
+      xhr :get, :show, format: :json, id: course_id
+    end
+
+    subject(:results) { JSON.parse(response.body) }
+
+    context 'when the course exists' do
+      let(:course) do
+        Course.create!(name: 'Calculus 1',
+                       code: 'MATH 1004')
+      end
+      let(:course_id) { course.id }
+
+      it { expect(response.status).to eq(200) }
+      it { expect(results['id']).to eq(course.id) }
+      it { expect(results['name']).to eq(course.name) }
+      it { expect(results['code']).to eq(course.code) }
+    end
+
+    context "when the course doesn't exist" do
+      let(:course_id) { -9999 }
+      it { expect(response.status).to eq(404) }
+    end
+  end
 end
