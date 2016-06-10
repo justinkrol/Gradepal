@@ -11,6 +11,9 @@ gradepal.config [ '$routeProvider',
       .when '/',
         templateUrl: 'index.html'
         controller: 'CoursesController'
+      .when '/courses/:courseId',
+        templateUrl: 'show.html'
+        controller: 'CourseController'
 ]
 
 controllers = angular.module('controllers',[])

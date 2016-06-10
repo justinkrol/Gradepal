@@ -2,18 +2,18 @@ require 'spec_helper.rb'
 
 feature 'Looking up courses', js: true do
   before do
-    Course.create!(name: 'MATH 1004')
-    Course.create!(name: 'MATH 1104')
-    Course.create!(name: 'SYSC 1005')
-    Course.create!(name: 'COMP 3005')
+    Course.create!(name: 'Calculus 1')
+    Course.create!(name: 'Linear Algebra')
+    Course.create!(name: 'Intro to Programming')
+    Course.create!(name: 'Databases')
   end
 
   scenario 'finding courses' do
     visit '/'
-    fill_in 'keywords', with: 'math'
+    fill_in 'keywords', with: 'al'
     click_on 'Search'
 
-    expect(page).to have_content('MATH 1004')
-    expect(page).to have_content('MATH 1104')
+    expect(page).to have_content('Calculus 1')
+    expect(page).to have_content('Linear Algebra')
   end
 end

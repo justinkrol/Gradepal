@@ -42,11 +42,11 @@ describe "CoursesController", ->
       courses = [
         {
           id: 2
-          name: 'MATH 1004'
+          name: 'Calculus 1'
         },
         {
           id: 4
-          name: 'MATH 1104'
+          name: 'Linear Algebra'
         }
       ]
       beforeEach ->

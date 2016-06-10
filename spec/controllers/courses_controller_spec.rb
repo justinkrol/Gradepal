@@ -1,13 +1,15 @@
+# Test for the rails controller
+
 require 'spec_helper'
 
 describe CoursesController do
   render_views
   describe 'index' do
     before do
-      Course.create!(name: 'SYSC 1005')
-      Course.create!(name: 'SYSC 3110')
-      Course.create!(name: 'COMP 3005')
-      Course.create!(name: 'MATH 1005')
+      Course.create!(name: 'Intro to Programming')
+      Course.create!(name: 'Software Project')
+      Course.create!(name: 'Databases')
+      Course.create!(name: 'Differential Equations')
 
       xhr :get, :index, format: :json, keywords: keywords
     end
@@ -19,18 +21,18 @@ describe CoursesController do
     end
 
     context 'when the search finds results' do
-      let(:keywords) { 'sysc' }
+      let(:keywords) { 'pro' }
       it 'should 200' do
         expect(response.status).to eq(200)
       end
       it 'should return two results' do
         expect(results.size).to eq(2)
       end
-      it "should include 'SYSC 1005'" do
-        expect(results.map(&extract_name)).to include('SYSC 1005')
+      it "should include 'Intro to Programming'" do
+        expect(results.map(&extract_name)).to include('Intro to Programming')
       end
-      it "should include 'SYSC 3110'" do
-        expect(results.map(&extract_name)).to include('SYSC 3110')
+      it "should include 'Software Project'" do
+        expect(results.map(&extract_name)).to include('Software Project')
       end
     end
 
