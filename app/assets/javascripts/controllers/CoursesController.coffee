@@ -19,7 +19,9 @@ controllers.controller("CoursesController", [ '$scope', '$routeParams', '$locati
     $scope.edit = (courseId)-> $location.path("/courses/#{courseId}/edit")
     $scope.delete = (courseId)->
       $scope.course = Course.get({courseId: courseId},
-        ()-> $scope.course.$delete()
+        ()-> $scope.course.$delete().then(
+          ( value )-> $scope.courses.splice($scope.courses.indexOf(courseId), 1), # remove 1 item at index
+          ( error )-> alert('error')
+        )
       )
-
 ])
