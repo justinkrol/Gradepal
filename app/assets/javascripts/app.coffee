@@ -19,8 +19,14 @@ gradepal.config [ '$routeProvider', 'flashProvider',
       .when '/',
         templateUrl: 'index.html'
         controller: 'CoursesController'
+      .when '/courses/new',
+        templateUrl: 'form.html'
+        controller: 'CourseController'
       .when '/courses/:courseId',
         templateUrl: 'show.html'
+        controller: 'CourseController'
+      .when '/courses/:courseId/edit',
+        templateUrl: 'form.html'
         controller: 'CourseController'
 ]
 
