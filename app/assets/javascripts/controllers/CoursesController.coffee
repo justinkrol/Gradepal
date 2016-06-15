@@ -1,12 +1,16 @@
 controllers = angular.module('controllers')
-controllers.controller("CoursesController", [ '$scope', '$routeParams', '$location', '$resource',
-  ($scope, $routeParams, $location, $resource)->
+controllers.controller("CoursesController", [ '$scope', '$routeParams', '$location', '$resource', 'flash'
+  ($scope, $routeParams, $location, $resource, flash)->
     $scope.search = (keywords)->  $location.path('/').search('keywords',keywords)
     Course = $resource('/courses/:courseId', {courseId: '@id', format: 'json' },
       {
         'delete': {method: 'DELETE'}
+        'create': {method: 'POST'}
       }
     )
+
+    # Variables
+    $scope.showNewCourseInput = false
 
     updateList = ()->
       if $routeParams.keywords
@@ -24,6 +28,24 @@ controllers.controller("CoursesController", [ '$scope', '$routeParams', '$locati
           ( error )-> alert('error')
         )
       )
+    $scope.showNewCourse = ()->
+      $scope.newCourse = {}
+      $scope.showNewCourseInput = true
+
+    $scope.submitCourse = ()->
+      console.log('Submitting course')
+      onError = (_httpResponse)->
+        flash.error = "Something went wrong"
+        alert("ERROR")
+      Course.create($scope.newCourse,
+        ( (createdCourse)->
+          flash.sucess = "Course created"
+          console.log('Created course with id' + createdCourse.id)
+          updateList()),
+        onError
+      )
+      $scope.showNewCourseInput = false
+      # need to do this after or the create can't get the info from the scope since the form is hidden
 
     # Init
     updateList()

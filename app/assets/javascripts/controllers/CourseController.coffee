@@ -24,14 +24,15 @@ controllers.controller('CourseController', ['$scope', '$routeParams', '$resource
       else
         $location.path("/")
     $scope.save   = ->
-      onError = (_httpResponse)-> flash.error = "Something went wrong"
+      onError = (_httpResponse)->
+        flash.error = "Something went wrong"
       if $scope.course.id
         $scope.course.$save(
           ( ()-> $location.path("/courses/#{$scope.course.id}") ),
           onError)
       else
         Course.create($scope.course,
-          ( (newCourse)-> $location.path("/courses/#{newCourse.id}") ),
+          ( (createdCourse)-> $location.path("/courses/#{createdCourse.id}") ),
           onError
         )
     $scope.delete = ->
