@@ -8,11 +8,11 @@ controllers.controller("CoursesController", [ '$scope', '$routeParams', '$locati
       }
     )
 
-    if $routeParams.keywords
-      Course.query(keywords: $routeParams.keywords, (results)-> $scope.courses = results)
-    else
-      # $scope.courses = []
-      Course.query((results)-> $scope.courses = results)
+    updateList = ()->
+      if $routeParams.keywords
+        Course.query(keywords: $routeParams.keywords, (results)-> $scope.courses = results)
+      else
+        Course.query((results)-> $scope.courses = results)
 
     $scope.view = (courseId)-> $location.path("/courses/#{courseId}")
     $scope.newCourse = -> $location.path("courses/new")
@@ -20,8 +20,11 @@ controllers.controller("CoursesController", [ '$scope', '$routeParams', '$locati
     $scope.delete = (courseId)->
       $scope.course = Course.get({courseId: courseId},
         ()-> $scope.course.$delete().then(
-          ( value )-> $scope.courses.splice($scope.courses.indexOf(courseId), 1), # remove 1 item at index
+          ( value )-> updateList(),
           ( error )-> alert('error')
         )
       )
+
+    # Init
+    updateList()
 ])
