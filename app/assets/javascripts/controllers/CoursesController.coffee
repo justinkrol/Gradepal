@@ -9,8 +9,10 @@ controllers.controller("CoursesController", [ '$scope', '$routeParams', '$locati
       }
     )
 
-    # Variables
-    $scope.showNewCourseInput = false
+    init = ()->
+      $scope.showNewCourseInput = false
+      $scope.newCourse = {}
+      updateList()
 
     updateList = ()->
       if $routeParams.keywords
@@ -28,25 +30,28 @@ controllers.controller("CoursesController", [ '$scope', '$routeParams', '$locati
           ( error )-> alert('error')
         )
       )
-    $scope.showNewCourse = ()->
-      $scope.newCourse = {}
-      $scope.showNewCourseInput = true
+    $scope.showNewCourse = (bShow)->
+      $scope.showNewCourseInput = bShow
 
     $scope.submitCourse = ()->
       console.log('Submitting course')
       onError = (_httpResponse)->
         flash.error = "Something went wrong"
-        alert("ERROR")
-      Course.create($scope.newCourse,
-        ( (createdCourse)->
-          flash.sucess = "Course created"
-          console.log('Created course with id' + createdCourse.id)
-          updateList()),
-        onError
-      )
-      $scope.showNewCourseInput = false
+      if($scope.newCourse.name)
+        Course.create($scope.newCourse,
+          ( (createdCourse)->
+            flash.sucess = "Course created"
+            $scope.newCourse = {}
+            console.log('Created course with id' + createdCourse.id)
+            updateList()),
+          onError)
+        $scope.showNewCourseInput = false
+      else
+        flash.error = "Please enter a name for the course"
+
       # need to do this after or the create can't get the info from the scope since the form is hidden
 
     # Init
-    updateList()
+    init()
+
 ])

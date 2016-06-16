@@ -10,6 +10,8 @@ gradepal = angular.module 'gradepal',[
 gradepal.config [ '$routeProvider', 'flashProvider',
   ($routeProvider, flashProvider)->
 
+    # flashProvider.setTimeout(5000)
+    # flashProvider.setShowClose(true)
     flashProvider.errorClassnames.push('alert-danger')
     flashProvider.warnClassnames.push("alert-warning")
     flashProvider.infoClassnames.push("alert-info")

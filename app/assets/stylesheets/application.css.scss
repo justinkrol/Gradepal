@@ -17,6 +17,7 @@
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap-sprockets";
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap";
 
-#newCoursebutton {
-
+.course-title {
+  padding-left: 10px;
+  text-overflow: ellipsis;
 }
