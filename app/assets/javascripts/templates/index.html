@@ -1,6 +1,11 @@
 <div class="container">
   <header class="row">
-    <h1 class="col-md-10 col-md-offset-1">My Courses</h1>
+    <div class="col-md-8 col-xs-8 col-md-offset-1">
+      <h1>My Courses</h1>
+    </div>
+    <div class="form-group col-md-2 col-xs-4 text-center add-course-button">
+      <button id="newCourseButton" ng-if="!showNewCourseInput" ng-click="showNewCourse(true)" type="button" class="btn btn-default pull-right">&plus; Add a course</button>
+    </div>
   </header>
   <aside class="flash row">
     <article flash-alert duration="0" active-class="alert" class="col-md-10 col-md-offset-1">
@@ -21,7 +26,7 @@
   <section ng-if="courses">
     <!-- <ul class="list-unstyled"> -->
       <div class="row" ng-repeat="course in courses">
-        <section class="well col-md-10 col-md-offset-1 col-xs-12">
+        <section ng-if="(course.id != editCourseId)" class="well col-md-10 col-md-offset-1 col-xs-12">
           <h1 class="h3 course-title col-md-9 col-xs-7" style="margin-top: 0"><a href ng-click="view(course.id)">
             {{course.code + " - " + course.name}}</a></h1>
           <div class="col-md-3 col-xs-5">
@@ -31,13 +36,15 @@
             </div>
           </div>
         </section>
+        <div class="row">
+          <ng-include ng-if="course.id == editCourseId" src=" 'form.html' "></ng-include>
+        </div>
       </div>
+
     <!-- </ul> -->
   </section>
   <div class="row">
-    <ng-include ng-if="showNewCourseInput" src=" 'newCourseInput.html' "></ng-include>
+    <ng-include ng-if="showNewCourseInput" src=" 'form.html' "></ng-include>
   </div>
-  <div class="form-group col-md-10 col-md-offset-1 text-center">
-    <button id="newCourseButton" ng-if="!showNewCourseInput" ng-click="showNewCourse(true)" type="button" class="btn btn-default">New course</button>
-  </div>
+
 </div> <!-- end of container -->

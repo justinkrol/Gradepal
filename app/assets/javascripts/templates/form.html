@@ -1,36 +1,15 @@
-<aside class="flash row">
-  <article flash-alert duration="0" active-class="alert" class="col-md-6 col-md-offset-3">
-    {{flash.message}}
-  </article>
-</aside>
-<form class="form-horizontal" role="form" class="edit-user">
-  <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
-    <label
-      for="name"
-      class="col-md-2 control-label col-md-offset-2">
-      Name
-    </label>
-    <div class="col-md-5">
-      <input type="text" name="name" class="form-control" placeholder="e.g. Introduction to Computer Science" ng-model="course.name">
+<section class="well col-md-10 col-md-offset-1 new-course">
+  <!-- <h4>Add a course</h4> -->
+  <form class="form-inline">
+    <div class="form-group">
+      <!-- <label class="form-control-label" for="codeInput">Code</label> -->
+      <input id="codeInput" ng-model="courseInput.code" name="code" type="text" class="form-control form-control-success" placeholder="Code">
     </div>
-  </div>
-  <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
-    <label
-      for="code"
-      class="col-md-2 control-label col-md-offset-2">
-      Code
-    </label>
-    <div class="col-md-5">
-      <textarea name="code" class="form-control" ng-model='course.code' placeholder="e.g. COMP 1001">
-      </textarea>
+    <div class="form-group">
+      <!-- <label class="form-control-label" for="nameInput">Name</label> -->
+      <input id="nameInput" ng-model="courseInput.name" name="name" type="text" autofocus class="form-control form-control-success" placeholder="Name">
     </div>
-  </div>
-  <div class="form-group">
-    <div class="col-md-offset-2 col-md-3">
-      <button class="btn btn-default" ng-click="cancel()"> Cancel</button>
-    </div>
-    <div class="col-md-4 text-right">
-      <button class="btn btn-primary" ng-click="save()"> Save </button>
-    </div>
-  </div>
+    <button ng-click="save()" type="submit" class="btn btn-primary">&#x2713; Submit</button>
+    <button ng-click="showNewCourse(false)" class="btn btn-default">&#x2717; Cancel</button>
+  </form>
 </section>
