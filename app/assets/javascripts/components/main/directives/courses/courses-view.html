@@ -4,7 +4,7 @@
       <h1>My Courses</h1>
     </div>
     <div class="form-group col-md-2 col-xs-4 text-center add-course-button">
-      <button id="newCourseButton" ng-if="!showNewCourseInput" ng-click="showNewCourse(true)" type="button" class="btn btn-default pull-right">&plus; Add a course</button>
+      <button id="newCourseButton" ng-if="!ctrl.addingCourse" ng-click="showNewCourse(true)" type="button" class="btn btn-default pull-right">&plus; Add a course</button>
     </div>
   </header>
   <aside class="flash row">
@@ -17,27 +17,23 @@
       <div class="input-group">
         <input ng-model="keywords" name="keywords" type="text" autofocus class="form-control" placeholder="Course name">
         <span class="input-group-btn">
-          <button ng-click="search(keywords)" class="btn btn-primary" type="button">Search</button>
+          <button ng-click="ctrl.search(keywords)" class="btn btn-primary" type="button">Search</button>
         </span>
       </div>
     </div>
   </section>
   <hr>
   <section ng-if="courses">
-    <!-- <ul class="list-unstyled"> -->
-      <div class="row" ng-repeat="course in courses">
-        <section ng-if="(course.id != editCourseId)" class="well col-md-10 col-md-offset-1 col-xs-12">
-          <gp-course-card></gp-course-card>
-        </section>
-        <div class="row">
-          <ng-include ng-if="course.id == editCourseId" src=" 'form.html' "></ng-include>
-        </div>
-      </div>
-
-    <!-- </ul> -->
+    <div class="row" ng-repeat="course in ctrl.courses">
+      <section class="well col-md-10 col-md-offset-1 col-xs-12">
+        <gp-course-card gp-course-id="course.id" gp-editing="false"></gp-course-card>
+      </section>
+    </div>
   </section>
   <div class="row">
-    <ng-include ng-if="showNewCourseInput" src=" 'form.html' "></ng-include>
+    <section ng-if="ctrl.addingCourse" class="well col-md-10 col-md-offset-1 col-xs-12">
+      <gp-course-card gp-course-id="course.id" gp-editing="true"></gp-course-card>
+    </section>
   </div>
 
 </div> <!-- end of container -->
