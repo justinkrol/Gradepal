@@ -1,10 +1,14 @@
 gradepal = angular.module 'gradepal',[
+  # angular
   'templates',
   'ngRoute',
   'ngResource',
   'controllers',
   'angular-flash.service',
-  'angular-flash.flash-alert-directive'
+  'angular-flash.flash-alert-directive',
+
+  # components
+  'gradepal.main'
 ]
 
 gradepal.config [ '$routeProvider', 'flashProvider',
@@ -21,15 +25,7 @@ gradepal.config [ '$routeProvider', 'flashProvider',
       .when '/',
         templateUrl: 'index.html'
         controller: 'CoursesController'
-      .when '/courses/new',
-        templateUrl: 'form.html'
-        controller: 'CourseController'
-      .when '/courses/:courseId',
-        templateUrl: 'show.html'
-        controller: 'CourseController'
-      .when '/courses/:courseId/edit',
-        templateUrl: 'form.html'
-        controller: 'CourseController'
+
 ]
 
 controllers = angular.module('controllers',[])
