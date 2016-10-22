@@ -30,7 +30,9 @@
       }
       else {
         Course.query(function (results) {
-          ctrl.courses = results;
+          ctrl.courses = results.sort(function (a,b) {
+            return a.id - b.id;
+          });
         });
       }
       // ctrl.addingCourse = false;

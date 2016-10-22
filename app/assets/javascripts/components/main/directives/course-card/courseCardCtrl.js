@@ -42,21 +42,23 @@
         return;
       }
       ctrl.editing = false; // successful, so close dialog
-      $scope.gpParentCtrl.addingCourse = false;
 
       if(ctrl.course.id) { // This is an existing course if it already has an id; editing, not creating
         ctrl.course.$save(
-          (function() { console.log('Updated course with id ' + ctrl.course.id); }),
+          (function() {
+            console.log('Updated course with id ' + ctrl.course.id);
+          }),
           onError
         );
       }
       else { // This is a new course if it does not have an id
         Course.create(ctrl.course, (
           function (createdCourse) {
-            flash.success = "Course created successfully"
+            // flash.success = "Course created successfully"
             ctrl.course = createdCourse;
             console.log('Created course with id: ' + ctrl.course.id);
             $scope.gpParentCtrl.updateList();
+            $scope.gpParentCtrl.addingCourse = false;
           }),
             onError
         );
