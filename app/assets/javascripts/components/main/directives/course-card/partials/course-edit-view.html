@@ -1,15 +1,12 @@
-<section class="well col-md-10 col-md-offset-1 new-course">
-  <!-- <h4>Add a course</h4> -->
-  <form class="form-inline">
-    <div class="form-group">
-      <!-- <label class="form-control-label" for="codeInput">Code</label> -->
-      <input id="codeInput" ng-model="ctrl.code" name="code" type="text" class="form-control form-control-success" placeholder="Code">
-    </div>
-    <div class="form-group">
-      <!-- <label class="form-control-label" for="nameInput">Name</label> -->
-      <input id="nameInput" ng-model="ctrl.name" name="name" type="text" autofocus class="form-control form-control-success" placeholder="Name">
-    </div>
-    <button ng-click="ctrl.save()" type="submit" class="btn btn-primary">&#x2713; Save</button>
-    <button ng-click="ctrl.cancel()" class="btn btn-default">&#x2717; Cancel</button>
-  </form>
-</section>
+<form class="form-inline">
+  <div class="form-group">
+    <!-- <label class="form-control-label" for="codeInput">Code</label> -->
+    <input id="codeInput" ng-model="ctrl.course.code" name="code" type="text" class="form-control form-control-success" placeholder="Code">
+  </div>
+  <div class="form-group">
+    <!-- <label class="form-control-label" for="nameInput">Name</label> -->
+    <input id="nameInput" ng-model="ctrl.course.name" name="name" type="text" autofocus class="form-control form-control-success" placeholder="Name">
+  </div>
+  <button ng-click="ctrl.save()" type="submit" class="btn btn-primary">&#x2713; Save</button>
+  <button ng-click="ctrl.cancel()" class="btn btn-default">&#x2717; Cancel</button>
+</form>

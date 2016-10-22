@@ -5,9 +5,7 @@
        restrict: 'E',
        templateUrl: 'components/main/directives/courses/courses-view.html',
        scope: {},
-       link: function () {
-
-       },
+       link: function () {},
        controller: 'CoursesCtrl',
        controllerAs: 'ctrl'
      }

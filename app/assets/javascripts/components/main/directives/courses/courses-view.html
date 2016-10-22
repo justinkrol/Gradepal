@@ -4,7 +4,7 @@
       <h1>My Courses</h1>
     </div>
     <div class="form-group col-md-2 col-xs-4 text-center add-course-button">
-      <button id="newCourseButton" ng-if="!ctrl.addingCourse" ng-click="showNewCourse(true)" type="button" class="btn btn-default pull-right">&plus; Add a course</button>
+      <button id="newCourseButton" ng-if="!ctrl.addingCourse" ng-click="ctrl.showNewCourse()" type="button" class="btn btn-default pull-right">&plus; Add a course</button>
     </div>
   </header>
   <aside class="flash row">
@@ -23,17 +23,10 @@
     </div>
   </section>
   <hr>
-  <section ng-if="courses">
-    <div class="row" ng-repeat="course in ctrl.courses">
-      <section class="well col-md-10 col-md-offset-1 col-xs-12">
-        <gp-course-card gp-course-id="course.id" gp-editing="false"></gp-course-card>
-      </section>
-    </div>
+  <section ng-if="ctrl.courses">
+    <gp-course-card ng-repeat="course in ctrl.courses" gp-parent-ctrl="ctrl" gp-course="course" gp-editing="false"></gp-course-card>
   </section>
-  <div class="row">
-    <section ng-if="ctrl.addingCourse" class="well col-md-10 col-md-offset-1 col-xs-12">
-      <gp-course-card gp-course-id="course.id" gp-editing="true"></gp-course-card>
-    </section>
+  <gp-course-card ng-show="ctrl.addingCourse" gp-parent-ctrl="ctrl" gp-editing="true"></gp-course-card>
   </div>
 
 </div> <!-- end of container -->
