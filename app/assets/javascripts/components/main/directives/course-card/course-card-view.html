@@ -1,0 +1,6 @@
+<div class="row">
+  <section class="well col-md-10 col-md-offset-1 col-xs-12">
+    <div ng-if="ctrl.editing" ng-include="'components/main/directives/course-card/partials/course-edit-view.html'"></div>
+    <div ng-if="!ctrl.editing" ng-include="'components/main/directives/course-card/partials/course-regular-view.html'"></div>
+  </section>
+</div>

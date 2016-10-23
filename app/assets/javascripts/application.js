@@ -17,4 +17,7 @@
 //= require angular-resource/angular-resource
 //= require angular-rails-templates
 //= require angular-flash/dist/angular-flash
+//= require ./app
+//= require ./components/main/mainDefs
+//= require_tree ./components/main/directives
 //= require_tree .
