@@ -15,7 +15,7 @@
     ctrl.editing = false;
 
     ctrl.init = function () {
-      ctrl.course = $scope.gpCourse
+      ctrl.course = $scope.gpCourse ? $scope.gpCourse : {};
       // ctrl.course.id = $scope.gpCourseId;
       ctrl.editing = $scope.gpEditing;
     }
