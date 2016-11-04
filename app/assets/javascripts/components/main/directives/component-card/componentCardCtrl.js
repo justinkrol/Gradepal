@@ -80,7 +80,7 @@
         ctrl.component.weight = ctrl.temp.weight;
       }
       ctrl.editing = false;
-      $scope.goCourseCtrl.addingComponent = false;
+      $scope.gpCourseCtrl.addingComponent = false;
     }
 
     ctrl.init();
