@@ -3,4 +3,11 @@
     <div ng-if="ctrl.editing" ng-include="'components/main/directives/course-card/partials/course-edit-view.html'"></div>
     <div ng-if="!ctrl.editing" ng-include="'components/main/directives/course-card/partials/course-regular-view.html'"></div>
   </section>
+  <section ng-if="ctrl.course.components">
+    <gp-component-card ng-repeat="component in ctrl.course.components" gp-course-ctrl="ctrl" gp-component="component" gp-editing="false"></gp-course-card>
+  </section>
+  <gp-component-card ng-if="ctrl.addingComponent" gp-course-ctrl="ctrl" gp-editing="true"></gp-component-card>
+  <div class="form-group col-md-2 col-xs-4 text-center add-course-button">
+    <button id="newComponentButton{{ctrl.course.id}}" ng-if="!ctrl.addingComponent" ng-click="ctrl.showNewComponent()" type="button" class="btn btn-default pull-right">&plus; Add a component</button>
+  </div>
 </div>
