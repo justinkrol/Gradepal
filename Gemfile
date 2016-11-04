@@ -23,6 +23,7 @@ group :production, :staging do
 end
 
 group :development, :test do
+  gem 'pry'
   gem 'byebug'
   gem 'rspec'
   gem 'rspec-rails', '~> 2.0'
