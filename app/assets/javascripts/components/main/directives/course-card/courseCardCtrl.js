@@ -24,19 +24,26 @@
       ctrl.course = $scope.gpCourse ? $scope.gpCourse : {};
       // ctrl.course.id = $scope.gpCourseId;
       ctrl.editing = $scope.gpEditing;
+      ctrl.selected = false;
       ctrl.getComponents();
     }
 
     ctrl.getComponents = function () {
-      Component.query({courseId: ctrl.course.id}, function (results) {
-        ctrl.course.components = results.sort(function (a,b) {
-          return a.id - b.id;
+      if(ctrl.course.id) {
+        Component.query({courseId: ctrl.course.id}, function (results) {
+          ctrl.course.components = results.sort(function (a,b) {
+            return a.id - b.id;
+          });
         });
-      });
+      }
     }
 
     ctrl.showNewComponent = function () {
       ctrl.addingComponent = true; // view will show the appropriate box
+    }
+
+    ctrl.toggleSelect = function () {
+      ctrl.isSelected = !ctrl.isSelected
     }
 
     ctrl.edit = function () {
