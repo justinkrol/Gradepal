@@ -10,6 +10,12 @@
         'create': {method: 'POST'},
         'save': {method: 'PUT'}
       });
+    var Component = $resource('/courses/:courseId/components/:componentId', { format: 'json' },
+      {
+        'delete': {method: 'DELETE'},
+        'create': {method: 'POST'},
+        'save': {method: 'PUT'}
+      });
 
     var ctrl = this;
     ctrl.editing = false;
@@ -18,6 +24,19 @@
       ctrl.course = $scope.gpCourse ? $scope.gpCourse : {};
       // ctrl.course.id = $scope.gpCourseId;
       ctrl.editing = $scope.gpEditing;
+      ctrl.getComponents();
+    }
+
+    ctrl.getComponents = function () {
+      Component.query({courseId: ctrl.course.id}, function (results) {
+        ctrl.course.components = results.sort(function (a,b) {
+          return a.id - b.id;
+        });
+      });
+    }
+
+    ctrl.showNewComponent = function () {
+      ctrl.addingComponent = true; // view will show the appropriate box
     }
 
     ctrl.edit = function () {
