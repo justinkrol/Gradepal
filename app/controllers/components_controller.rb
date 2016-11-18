@@ -40,7 +40,7 @@ class ComponentsController < ApplicationController
 
   private
 		def component_params
-			params.require(:component).permit(:name, :weight)
+			params.require(:component).permit(:name, :weight, :course_id)
 		end
 
 end

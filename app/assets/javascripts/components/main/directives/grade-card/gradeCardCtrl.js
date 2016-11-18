@@ -4,7 +4,7 @@
   GradeCardCtrl.$inject = ['$scope', '$resource', 'flash'];
 
   function GradeCardCtrl($scope, $resource, flash) {
-    var Grade = $resource('courses/:courseId/components/:componentId/grades/:gradeId', {courseId: '@courseId', componentId: '@componentId', gradeId: '@id', format: 'json' },
+    var Grade = $resource('grades/:gradeId', {gradeId: '@id', format: 'json' },
       {
         'delete': {method: 'DELETE'},
         'create': {method: 'POST'},
@@ -15,8 +15,14 @@
     ctrl.editing = false;
 
     ctrl.init = function () {
-      ctrl.grade = $scope.gpGrade ? $scope.gpGrade : {};
-      ctrl.grade.fullScore = ctrl.grade.score + '/' + ctrl.grade.max;
+      if($scope.gpGrade) {
+        ctrl.grade = $scope.gpGrade;
+        ctrl.grade.fullScore = ctrl.grade.score + '/' + ctrl.grade.max;
+      }
+      else {
+        ctrl.grade = {};
+        ctrl.grade.fullScore = '';
+      }
       // ctrl.grade.id = $scope.gpGradeId;
       ctrl.editing = $scope.gpEditing;
     }
@@ -29,7 +35,7 @@
 
     ctrl.delete = function () {
       console.log('Deleting grade with id: ' + ctrl.grade.id);
-      ctrl.grade.$delete({courseId: $scope.gpCourseCtrl.course.id, componentId: $scope.gpComponentCtrl.component.id, gradeId: ctrl.grade.id}, function(){
+      ctrl.grade.$delete({gradeId: ctrl.grade.id}, function(){
         $scope.$destroy();}
       );
 
@@ -53,7 +59,7 @@
       ctrl.editing = false; // successful, so close dialog
 
       if(ctrl.grade.id) { // This is an existing grade if it already has an id; editing, not creating
-        ctrl.grade.$save({courseId: $scope.gpCourseCtrl.course.id, componentId: $scope.gpComponentCtrl.component.id, gradeId: ctrl.grade.id},
+        ctrl.grade.$save({gradeId: ctrl.grade.id},
           (function() {
             console.log('Updated grade with id ' + ctrl.grade.id);
           }),
@@ -61,8 +67,7 @@
         );
       }
       else { // This is a new grade if it does not have an id
-        ctrl.grade.courseId = $scope.gpCourseCtrl.course.id;
-        ctrl.grade.componentId = $scope.gpComponentCtrl.component.id;
+        ctrl.grade.component_id = $scope.gpComponentCtrl.component.id;
         Grade.create(ctrl.grade, (
           function (createdGrade) {
             // flash.success = "Grade created successfully"

@@ -39,7 +39,7 @@ class GradesController < ApplicationController
 
   private
 		def grade_params
-			params.require(:grade).permit(:name, :score, :max)
+			params.require(:grade).permit(:name, :score, :max, :component_id)
 		end
 
 end
