@@ -10,6 +10,12 @@
         'create': {method: 'POST'},
         'save': {method: 'PUT'}
       });
+    var Grade = $resource('courses/:courseId/components/:componentId/grades/:gradeId', {courseId: '@courseId', componentId: '@componentId', gradeId: '@id', format: 'json' },
+      {
+        'delete': {method: 'DELETE'},
+        'create': {method: 'POST'},
+        'save': {method: 'PUT'}
+      });
 
     var ctrl = this;
     ctrl.editing = false;
@@ -18,6 +24,27 @@
       ctrl.component = $scope.gpComponent ? $scope.gpComponent : {};
       // ctrl.component.id = $scope.gpComponentId;
       ctrl.editing = $scope.gpEditing;
+      ctrl.addingGrade = false;
+      ctrl.selected = false;
+      ctrl.getGrades();
+    }
+
+    ctrl.showNewGrade = function () {
+      ctrl.addingGrade = true; // view will show the appropriate box
+    }
+
+    ctrl.toggleSelect = function () {
+      ctrl.isSelected = !ctrl.isSelected
+    }
+
+    ctrl.getGrades = function () {
+      if(ctrl.component.id) {
+        Grade.query({courseId: $scope.gpCourseCtrl.course.id, componentId: ctrl.component.id}, function (results) {
+          ctrl.component.grades = results.sort(function (a,b) {
+            return a.id - b.id;
+          });
+        });
+      }
     }
 
     ctrl.edit = function () {
