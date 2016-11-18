@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :courses, only: [:index, :show, :create, :update, :destroy] do
     resources :components, only: [:index, :show, :create, :update, :destroy] do
-      resources :grades, only: [:create, :update, :destroy]
+      resources :grades, only: [:index, :show, :create, :update, :destroy]
     end
   end
 end

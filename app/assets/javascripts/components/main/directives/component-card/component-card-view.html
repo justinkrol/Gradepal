@@ -1,4 +1,13 @@
 <div class="col-md-10 col-md-offset-1 col-xs-12">
   <div ng-if="ctrl.editing" ng-include="'components/main/directives/component-card/partials/component-edit-view.html'"></div>
   <div ng-if="!ctrl.editing" ng-include="'components/main/directives/component-card/partials/component-regular-view.html'"></div>
+  <div ng-show="ctrl.isSelected">
+    <section ng-if="ctrl.component.grades">
+      <gp-grade-card ng-repeat="grade in ctrl.component.grades" gp-course-ctrl="gpCourseCtrl" gp-component-ctrl="ctrl" gp-grade="grade" gp-editing="false"></gp-grade-card>
+    </section>
+    <gp-grade-card ng-if="ctrl.addingGrade" gp-course-ctrl="gpCourseCtrl" gp-component-ctrl="ctrl" gp-editing="true"></gp-grade-card>
+    <div class="form-group col-md-2 col-xs-4 text-center add-course-button">
+      <button id="newGradeButton{{ctrl.component.id}}" ng-if="!ctrl.addingGrade" ng-click="ctrl.showNewGrade()" type="button" class="btn btn-default pull-right">&plus; Add a grade</button>
+    </div>
+  </div>
 </div>
