@@ -16,13 +16,14 @@
 
     ctrl.init = function () {
       ctrl.grade = $scope.gpGrade ? $scope.gpGrade : {};
+      ctrl.grade.fullScore = ctrl.grade.score + '/' + ctrl.grade.max;
       // ctrl.grade.id = $scope.gpGradeId;
       ctrl.editing = $scope.gpEditing;
     }
 
     ctrl.edit = function () {
       ctrl.editing = true;
-      ctrl.temp = {name: ctrl.grade.name, score: ctrl.grade.score};
+      ctrl.temp = {name: ctrl.grade.name, fullScore: ctrl.grade.fullScore};
       console.log('Editing grade with id: ' + ctrl.grade.id);
     }
 
@@ -35,9 +36,9 @@
     }
 
     ctrl.save = function () {
-      ctrl.grade.max = parseInt(ctrl.grade.score.split('/')[1]);
-      ctrl.grade.score = parseInt(ctrl.grade.score.split('/')[0]);
-      console.log('Saving grade with name: ' + ctrl.grade.name + ', score: ' + ctrl.grade.score + ', weight: ' + ctrl.grade.weight);
+      ctrl.grade.max = parseInt(ctrl.grade.fullScore.split('/')[1]);
+      ctrl.grade.score = parseInt(ctrl.grade.fullScore.split('/')[0]);
+      console.log('Saving grade with name: ' + ctrl.grade.name + ', score: ' + ctrl.grade.score + ', max: ' + ctrl.grade.max);
       var onError = function (_httpResponse) {
         flash.error = 'Something went wrong';
       }
@@ -45,7 +46,7 @@
         flash.error = 'Please enter a name for the grade';
         return;
       }
-      if (!ctrl.grade.score) { // bad input
+      if (!ctrl.grade.fullScore) { // bad input
         flash.error = 'Please enter a score for the grade';
         return;
       }
@@ -80,7 +81,7 @@
       if(ctrl.grade.id && ctrl.temp) { // existing grade
         console.log('a');
         ctrl.grade.name = ctrl.temp.name;
-        ctrl.grade.score = ctrl.temp.score;
+        ctrl.grade.fullScore = ctrl.temp.fullScore;
       }
       ctrl.editing = false;
       $scope.gpComponentCtrl.addingGrade = false;
