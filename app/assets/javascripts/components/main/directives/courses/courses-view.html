@@ -15,7 +15,7 @@
   <section class="row">
     <div class="col-md-10 col-md-offset-1">
       <div class="input-group">
-        <input ng-model="keywords" name="keywords" type="text" autofocus class="form-control" placeholder="Course name">
+        <input ng-model="keywords" name="keywords" type="text" autofocus class="form-control" placeholder="Course name" ng-keyup="$event.keyCode == 13 ? ctrl.search(keywords) : null">
         <span class="input-group-btn">
           <button ng-click="ctrl.search(keywords)" class="btn btn-primary" type="button">Search</button>
         </span>

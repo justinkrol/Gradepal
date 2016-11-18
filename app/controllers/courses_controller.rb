@@ -4,7 +4,7 @@ class CoursesController < ApplicationController
 
   def index
     @courses = if params[:keywords]
-                 Course.where('name ilike ?', "%#{params[:keywords]}%")
+                 Course.where("code ilike :search or name ilike :search", {search: "%#{params[:keywords]}%"})
                else
                  Course.all
                end
