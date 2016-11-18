@@ -4,13 +4,13 @@
   ComponentCardCtrl.$inject = ['$scope', '$resource', 'flash'];
 
   function ComponentCardCtrl($scope, $resource, flash) {
-    var Component = $resource('courses/:courseId/components/:componentId', {courseId: '@courseId', componentId: '@id', format: 'json' },
+    var Component = $resource('components/:componentId', {componentId: '@id', format: 'json' },
       {
         'delete': {method: 'DELETE'},
         'create': {method: 'POST'},
         'save': {method: 'PUT'}
       });
-    var Grade = $resource('courses/:courseId/components/:componentId/grades/:gradeId', {courseId: '@courseId', componentId: '@componentId', gradeId: '@id', format: 'json' },
+    var Grade = $resource('grades/:gradeId', {gradeId: '@id', format: 'json' },
       {
         'delete': {method: 'DELETE'},
         'create': {method: 'POST'},
@@ -39,7 +39,7 @@
 
     ctrl.getGrades = function () {
       if(ctrl.component.id) {
-        Grade.query({courseId: $scope.gpCourseCtrl.course.id, componentId: ctrl.component.id}, function (results) {
+        Grade.query({component_id: ctrl.component.id}, function (results) {
           ctrl.component.grades = results.sort(function (a,b) {
             return a.id - b.id;
           });
@@ -55,7 +55,7 @@
 
     ctrl.delete = function () {
       console.log('Deleting component with id: ' + ctrl.component.id);
-      ctrl.component.$delete({courseId: $scope.gpCourseCtrl.course.id, componentId: ctrl.component.id}, function(){
+      ctrl.component.$delete({componentId: ctrl.component.id}, function(){
         $scope.$destroy();}
       );
 
@@ -77,7 +77,7 @@
       ctrl.editing = false; // successful, so close dialog
 
       if(ctrl.component.id) { // This is an existing component if it already has an id; editing, not creating
-        ctrl.component.$save({courseId: $scope.gpCourseCtrl.course.id, componentId: ctrl.component.id},
+        ctrl.component.$save({componentId: ctrl.component.id},
           (function() {
             console.log('Updated component with id ' + ctrl.component.id);
           }),
@@ -85,7 +85,7 @@
         );
       }
       else { // This is a new component if it does not have an id
-        ctrl.component.courseId = $scope.gpCourseCtrl.course.id;
+        ctrl.component.course_id = $scope.gpCourseCtrl.course.id;
         Component.create(ctrl.component, (
           function (createdComponent) {
             // flash.success = "Component created successfully"

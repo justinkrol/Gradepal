@@ -10,7 +10,7 @@
         'create': {method: 'POST'},
         'save': {method: 'PUT'}
       });
-    var Component = $resource('/courses/:courseId/components/:componentId', { format: 'json' },
+    var Component = $resource('components/:componentId', { format: 'json' },
       {
         'delete': {method: 'DELETE'},
         'create': {method: 'POST'},
@@ -30,7 +30,7 @@
 
     ctrl.getComponents = function () {
       if(ctrl.course.id) {
-        Component.query({courseId: ctrl.course.id}, function (results) {
+        Component.query({course_id: ctrl.course.id}, function (results) {
           ctrl.course.components = results.sort(function (a,b) {
             return a.id - b.id;
           });

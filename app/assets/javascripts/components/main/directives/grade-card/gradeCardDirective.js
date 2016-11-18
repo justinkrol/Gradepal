@@ -5,7 +5,6 @@
         restrict: 'E',
         templateUrl: 'components/main/directives/grade-card/grade-card-view.html',
         scope: {
-          gpCourseCtrl: '=',
           gpComponentCtrl: '=',
           gpGrade: '=',
           gpEditing: '='
