@@ -26,7 +26,7 @@ group :development, :test do
   gem 'pry'
   gem 'byebug'
   gem 'rspec'
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'capybara'
   gem 'database_cleaner'
