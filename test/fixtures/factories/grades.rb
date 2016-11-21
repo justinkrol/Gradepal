@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :grade do
-    name "MyString"
-    score 1
-    max 1
+    name "Assignment 1"
+    score 10
+    max 10
     component nil
   end
 end
