@@ -21,7 +21,7 @@
     ctrl.editing = false;
 
     ctrl.init = function () {
-      ctrl.course = $scope.gpCourse ? $scope.gpCourse : {};
+      // ctrl.course = $scope.gpCourse ? $scope.gpCourse : {};
       // ctrl.course.id = $scope.gpCourseId;
       ctrl.editing = $scope.gpEditing;
       ctrl.selected = false;
@@ -29,9 +29,9 @@
     }
 
     ctrl.getComponents = function () {
-      if(ctrl.course.id) {
-        Component.query({course_id: ctrl.course.id}, function (results) {
-          ctrl.course.components = results.sort(function (a,b) {
+      if($scope.gpCourse && $scope.gpCourse.id) {
+        Component.query({course_id: $scope.gpCourse.id}, function (results) {
+          $scope.gpCourse.components = results.sort(function (a,b) {
             return a.id - b.id;
           });
         });
@@ -43,46 +43,52 @@
     }
 
     ctrl.toggleSelect = function () {
-      ctrl.isSelected = !ctrl.isSelected
+      if (ctrl.isSelected = !ctrl.isSelected){
+        ctrl.getComponents();
+      }
     }
 
     ctrl.edit = function () {
       ctrl.editing = true;
-      ctrl.temp = {code: ctrl.course.code, name: ctrl.course.name};
-      console.log('Editing course with id: ' + ctrl.course.id);
+      console.log('Editing course with id: ' + $scope.gpCourse.id);
     }
 
     ctrl.delete = function () {
-      console.log('Deleting course with id: ' + ctrl.course.id);
-      ctrl.course.$delete();
-      $scope.$destroy();
+      console.log('Deleting course with id: ' + $scope.gpCourse.id);
+      $scope.gpCourse.$delete();
+      $scope.gpParentCtrl.updateList();
+      // $scope.$destroy();
     }
 
     ctrl.save = function () {
-      console.log('Saving course with code: ' + ctrl.course.code + ', name: ' + ctrl.course.name);
+      console.log('Saving course with code: ' + $scope.gpCourse.code + ', name: ' + $scope.gpCourse.name);
       var onError = function (_httpResponse) {
         flash.error = 'Something went wrong';
       }
-      if (!ctrl.course.name) { // bad input
+      if (!$scope.gpCourse.code) { // bad input
+        flash.error = 'Please enter a code for the course';
+        return;
+      }
+      if (!$scope.gpCourse.name) { // bad input
         flash.error = 'Please enter a name for the course';
         return;
       }
       ctrl.editing = false; // successful, so close dialog
 
-      if(ctrl.course.id) { // This is an existing course if it already has an id; editing, not creating
-        ctrl.course.$save(
+      if($scope.gpCourse && $scope.gpCourse.id) { // This is an existing course if it already has an id; editing, not creating
+        $scope.gpCourse.$save(
           (function() {
-            console.log('Updated course with id ' + ctrl.course.id);
+            console.log('Updated course with id ' + $scope.gpCourse.id);
           }),
           onError
         );
       }
       else { // This is a new course if it does not have an id
-        Course.create(ctrl.course, (
+        Course.create($scope.gpCourse, (
           function (createdCourse) {
             // flash.success = "Course created successfully"
-            ctrl.course = createdCourse;
-            console.log('Created course with id: ' + ctrl.course.id);
+            $scope.gpCourse = createdCourse;
+            console.log('Created course with id: ' + $scope.gpCourse.id);
             $scope.gpParentCtrl.updateList();
             $scope.gpParentCtrl.addingCourse = false;
           }),
@@ -93,10 +99,12 @@
 
     ctrl.cancel = function () {
       console.log('Cancelling edit');
-      if(ctrl.course.id && ctrl.temp) { // existing course
-        console.log('a');
-        ctrl.course.code = ctrl.temp.code;
-        ctrl.course.name = ctrl.temp.name;
+      if($scope.gpCourse && $scope.gpCourse.id) { // existing course
+        console.log('Cancel changes to course');
+        Course.get({courseId: $scope.gpCourse.id}, function (result) {
+          console.log(result);
+          $scope.gpCourse = result;
+        });
       }
       ctrl.editing = false;
       $scope.gpParentCtrl.addingCourse = false;
