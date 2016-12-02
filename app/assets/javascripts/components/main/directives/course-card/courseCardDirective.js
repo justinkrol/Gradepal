@@ -10,6 +10,9 @@
           gpParentCtrl: '='
         },
         link: function (scope, element) {
+          scope.$watch("gpCourse",function(newValue,oldValue) {
+            console.log('Course changed');
+          });
           scope.$on('$destroy', function(){
               element.remove();
             });

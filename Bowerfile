@@ -1,4 +1,6 @@
 asset 'angular'
+asset 'angular-animate'
+asset 'angular-touch'
 asset 'angular-route'
 asset 'angular-resource'
 asset 'angular-mocks'
