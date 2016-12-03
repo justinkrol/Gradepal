@@ -7,21 +7,16 @@
     </aside>
   </header>
   <aside class="aside sidebar">
-    <header class="row">
-      <div class="sidebar-header">
-        <span class="courses-title">My courses</span>
-      </div>
-    </header>
     <div>
       <input name="keywords" type="text" placeholder="Find a Course"
         ng-model="keywords" ng-keyup="$event.keyCode == 13 ? ctrl.search(keywords) : null"
         uib-typeahead="course.code + ' - ' + course.name for course in ctrl.courses | filter:$viewValue"
         class="form-control courses-search" onClick="this.select();">
-      <!-- <input ng-model="keywords" name="keywords" type="text" autofocus class="form-control" placeholder="Search" ng-keyup="$event.keyCode == 13 ? ctrl.search(keywords) : null"> -->
     </div>
     <hr>
-    <p ng-repeat="course in ctrl.courses" class="course-title " style="margin-top: 0">
-      <button type="button" class='btn btn-default course-button' ng-click="ctrl.setActiveCourse(course)">{{course.code + " - " + course.name}}</button>
+    <ul class="nav nav-pills nav-stacked">
+      <li ng-repeat="course in ctrl.courses" ng-class="{'active': ctrl.activeCourse == course}"><a href ng-click="ctrl.setActiveCourse(course)">{{course.code + " - " + course.name}}</a></li>
+    </ul>
     <div class="sidebar-header">
       <button id="newCourseButton" ng-if="!ctrl.addingCourse" ng-click="ctrl.showNewCourse()" type="button" class="btn btn-default">&plus; Add a course</button>
     </div>

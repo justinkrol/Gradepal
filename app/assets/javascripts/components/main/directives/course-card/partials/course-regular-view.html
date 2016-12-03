@@ -1,8 +1,7 @@
-<p class="course-title " style="margin-top: 0"><a href ng-click="ctrl.toggleSelect()">
-  {{gpCourse.code + " - " + gpCourse.name}}</a></p>
-<div>
-  <div class="pull-right">
-    <button ng-click="ctrl.edit()" class="btn btn-info">Edit</button>
-    <button ng-click="ctrl.delete()" class="btn btn-danger">Delete</button>
-  </div>
+<span>
+  {{gpCourse.code + " - " + gpCourse.name}}
+</span>
+<div class="pull-right">
+  <button ng-click="ctrl.edit()" class="btn btn-info">Edit</button>
+  <button ng-click="ctrl.delete()" class="btn btn-danger">Delete</button>
 </div>

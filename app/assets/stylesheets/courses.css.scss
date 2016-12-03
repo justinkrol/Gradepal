@@ -36,19 +36,31 @@ $main-border: 2px solid #909090;
 .sidebar {
   flex: 0 0 300px;
   // background: #d9edf7;
-  background: pink;
+  // background: #7fc3f3;
+  background: white;
   border-right: 1px solid #ddd;
+
+  .sidebar-header {
+    display: inline-block;
+  }
+
+  .course-title {
+
+  }
 }
 
 .main {
   width: 468px;
   flex: 4 auto;
   text-align: left;
-  background: #f7f7f7;
-}
+  // background: #f7f7f7;
+  background: white;
 
-.aside .sidebar-header {
-  display: inline-block;
+  .course-title {
+    font-size:24px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid white;
+  }
 }
 
 .courses-title {
@@ -62,7 +74,7 @@ $main-border: 2px solid #909090;
 .courses-search {
   width: 100%;
   border-radius: 50px !important;
-  border:2px solid #f7f7f7 !important;
+  border:1px solid #ddd !important;
 
   text-align: center;
 }
@@ -87,3 +99,4 @@ $main-border: 2px solid #909090;
     order: 3;
   }
 }
+
