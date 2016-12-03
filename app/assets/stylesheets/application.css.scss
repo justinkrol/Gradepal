@@ -74,6 +74,27 @@ footer {
   border-bottom: $main-border
 }
 
+
+/* NAVBAR */
+.navbar-wrapper {
+  .navbar-toggle {
+    margin: 30px 10px;
+  }
+
+  .navbar-brand {
+    margin: 20px 0px;
+  }
+
+  #right-navbar {
+    margin: 20px 0px;
+  }
+
+  .brand-image {
+    width: 70px;
+    margin: 10px;
+  }
+}
+
 .sidebar {
   flex: 0 0 300px;
   // background: #d9edf7;
