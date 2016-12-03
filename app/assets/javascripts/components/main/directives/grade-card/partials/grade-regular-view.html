@@ -1,8 +1,6 @@
-<h1 class="h3 grade-title col-md-9 col-xs-7" style="margin-top: 0"><a href ng-click="view()">
-  {{ctrl.grade.name + " (" + ctrl.grade.score + "/" + ctrl.grade.max + ")"}}</a></h1>
-<div class="col-md-3 col-xs-5">
-  <div class="pull-right">
-    <button ng-click="ctrl.edit()" class="btn btn-info">Edit</button>
-    <button ng-click="ctrl.delete()" class="btn btn-danger">Delete</button>
-  </div>
+<span style="margin-top: 0"><a href ng-click="view()">
+  {{ctrl.grade.name + " (" + ctrl.grade.score + "/" + ctrl.grade.max + ")"}}</a></span>
+<div class="pull-right">
+  <a href ng-click="ctrl.edit()">Edit</a>
+  <a href ng-click="ctrl.delete()">Delete</a>
 </div>

@@ -25,7 +25,7 @@
       // ctrl.component.id = $scope.gpComponentId;
       ctrl.editing = $scope.gpEditing;
       ctrl.addingGrade = false;
-      ctrl.selected = false;
+      ctrl.isSelected = false;
       ctrl.getGrades();
     }
 
@@ -34,7 +34,7 @@
     }
 
     ctrl.toggleSelect = function () {
-      ctrl.isSelected = !ctrl.isSelected
+      ctrl.isSelected = !ctrl.isSelected;
     }
 
     ctrl.getGrades = function () {

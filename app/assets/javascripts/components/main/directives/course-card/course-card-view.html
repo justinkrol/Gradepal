@@ -1,15 +1,19 @@
 <div>
-  <section ng-class="{'well' : ctrl.isSelected}" class="bbb">
+  <div class="course-title">
     <div ng-if="ctrl.editing" ng-include="'components/main/directives/course-card/partials/course-edit-view.html'"></div>
     <div ng-if="!ctrl.editing" ng-include="'components/main/directives/course-card/partials/course-regular-view.html'"></div>
-    <div ng-show="ctrl.isSelected">
-      <section ng-if="gpCourse.components">
-        <gp-component-card ng-repeat="component in gpCourse.components" gp-course-ctrl="ctrl" gp-component="component" gp-editing="false"></gp-component-card>
-      </section>
-      <gp-component-card ng-if="ctrl.addingComponent" gp-course-ctrl="ctrl" gp-editing="true"></gp-component-card>
-      <div class="form-group text-center add-course-button">
-        <button id="newComponentButton{{gpCourse.id}}" ng-if="!ctrl.addingComponent" ng-click="ctrl.showNewComponent()" type="button" class="btn btn-default pull-right">&plus; Add a component</button>
+  </div>
+  <div>
+    <div ng-if="gpCourse.components">
+      <div class="panel-group" id="accordion">
+        <div ng-repeat="component in gpCourse.components" class="panel panel-default" >
+          <gp-component-card gp-course-ctrl="ctrl" gp-component="component" gp-editing="false"></gp-component-card>
+        </div>
       </div>
     </div>
-  </section>
+    <gp-component-card ng-if="ctrl.addingComponent" gp-course-ctrl="ctrl" gp-editing="true"></gp-component-card>
+    <button id="newComponentButton{{gpCourse.id}}" ng-if="!ctrl.addingComponent" ng-click="ctrl.showNewComponent()" type="button" class="btn btn-default">
+      &plus; Add a component
+    </button>
+  </div>
 </div>
