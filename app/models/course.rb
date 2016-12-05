@@ -2,8 +2,9 @@
 class Course < ActiveRecord::Base
   [:name, :code].each { |n| validates n, presence: true, length: { minimum: 1 } }
 
-  # belongs_to :user # uncomment when user auth added
+  
   # belongs_to :semester # if degree-year-semester are added to the model
+  belongs_to :user 
   has_many :components, dependent: :destroy
 end
 

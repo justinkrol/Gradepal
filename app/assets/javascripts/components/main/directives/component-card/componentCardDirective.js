@@ -6,6 +6,7 @@
         templateUrl: 'components/main/directives/component-card/component-card-view.html',
         scope: {
           gpCourseCtrl: '=',
+          gpCourseId: '=',
           gpComponent: '=',
           gpEditing: '='
 

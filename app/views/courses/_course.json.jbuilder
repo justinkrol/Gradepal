@@ -1,1 +1,1 @@
-json.call(course, :id, :name, :code)
+json.call(course, :id, :name, :code, :user_id)

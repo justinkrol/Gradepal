@@ -1,10 +1,10 @@
 # Components controller
-class ComponentsController < ApplicationController
+class ComponentsController < AuthenticatedController
   skip_before_filter :verify_authenticity_token
 
   def index
-    @course = Course.find(params[:course_id])
-    @components = @course.components.all
+    @course = current_user.courses.find(params[:course_id])
+    @components = @course.components
     # @components = Component.where(course_id: params[:course_id]).take
   end
 
@@ -13,7 +13,8 @@ class ComponentsController < ApplicationController
   end
 
   def create
-    @course = Course.find(params[:course_id])
+    # debugger
+    @course = current_user.courses.find(params[:course_id])
     # debugger
     @component = @course.components.create(component_params)
     render 'show', status: 201

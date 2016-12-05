@@ -85,7 +85,7 @@
         );
       }
       else { // This is a new component if it does not have an id
-        ctrl.component.course_id = $scope.gpCourseCtrl.course.id;
+        ctrl.component.course_id = $scope.gpCourseId;
         Component.create(ctrl.component, (
           function (createdComponent) {
             // flash.success = "Component created successfully"

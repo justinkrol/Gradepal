@@ -16,6 +16,8 @@ gem 'angular-rails-templates'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'foreman'
+gem 'devise'
+
 group :production, :staging do
   gem 'rails_12factor'
   gem 'rails_stdout_logging'
