@@ -11,7 +11,7 @@
         },
         link: function (scope, element) {
           scope.$watch("gpCourse",function(newValue,oldValue) {
-            console.log('Course changed');
+            console.log('Course changed from ' + oldValue.id + ' to ' + newValue.id);
           });
           scope.$on('$destroy', function(){
               element.remove();
