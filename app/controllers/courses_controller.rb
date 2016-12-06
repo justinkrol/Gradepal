@@ -4,7 +4,6 @@ class CoursesController < AuthenticatedController
 
   def index
     @courses = current_user.courses
-    # @courses = params[:keywords] ? current_user.courses.where("code ilike :search or name ilike :search", {search: "%#{params[:keywords]}%"}) : current_user.courses
   end
 
   def show
