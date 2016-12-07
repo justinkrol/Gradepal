@@ -12,15 +12,6 @@
 
 <body>
 
-  <div>
-    <% if user_signed_in? %>
-      Signed in as <strong><%= current_user.email %></strong>!
-      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "Sign in", new_user_session_path %>
-    <% end %>
-  </div>
-
   <%= render 'layouts/navbar' %>
 
   <p class="notice"><%= notice %></p>

@@ -20,4 +20,5 @@
 //= require ./app
 //= require ./components/main/mainDefs
 //= require_tree ./components/main/directives
+//= require bootstrap-sass-official
 //= require_tree .
