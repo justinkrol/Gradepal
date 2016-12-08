@@ -22,6 +22,22 @@ $threshold: 768px;
 $main-border: 2px solid #909090;
 $footer-background: #f0f0f0;
 
+html, body { height: 100%; }
+
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
+.site-page-wrapper {
+  background: url(desk_bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+}
+
 .course-title {
   padding-left: 10px;
   text-overflow: ellipsis;
@@ -74,9 +90,13 @@ footer {
   border-bottom: $main-border
 }
 
-
+.translucent {
+    background-color: rgba(248, 248, 248, 0.7);
+  }
+  
 /* NAVBAR */
-.navbar-wrapper {
+.navbar-wrapper { 
+
   .navbar-toggle {
     margin: 30px 10px;
   }
@@ -92,7 +112,7 @@ footer {
   .brand-image {
     width: 70px;
     margin: 10px;
-  }
+  } 
 }
 
 .sidebar {

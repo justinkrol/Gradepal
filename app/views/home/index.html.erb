@@ -1,5 +1,7 @@
-<div ng-app="gradepal">
-  <div class="view-container">
-    <div ng-view class="view-frame animate-view"></div>
+<%= render layout: 'layouts/app_page' do %>
+  <div ng-app="gradepal">
+    <div class="view-container">
+      <div ng-view class="view-frame animate-view"></div>
+    </div>
   </div>
-</div>
+<% end %>
