@@ -1,35 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Gradepal</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <!--Safari pinned tab icon (doesn't work yet)-->
-  <link rel='mask-icon' href='favicon2.svg' color='blue'>
-  <%= favicon_link_tag 'fox_icon_no_bg.ico' %>
-</head>
+  <head>
+    <title>Gradepal</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <!--Safari pinned tab icon (doesn't work yet)-->
+    <link rel='mask-icon' href='favicon2.svg' color='blue'>
+    <%= favicon_link_tag 'fox_icon_no_bg.ico' %>
+  </head>
 
-<body>
-
-  <div>
-    <% if user_signed_in? %>
-      Signed in as <strong><%= current_user.email %></strong>!
-      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "Sign in", new_user_session_path %>
-    <% end %>
-  </div>
-
-  <%= render 'layouts/navbar' %>
-
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-
-  <%= yield %>
-
-  <%= render 'layouts/footer' %>
-
-
-</body>
+  <body>
+    <%= yield %>
+  </body>
 </html>

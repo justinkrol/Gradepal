@@ -1,0 +1,97 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
+
+$text-color: #ddd;
+$input-border-color: #5E5165;
+$button-background-color: #27AE60;
+
+@mixin normalize-input {
+  display: block;
+  width: auto;
+  height: auto;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: none;
+  border-radius: 0px;
+}
+
+.login {
+  padding: 15px;
+  width: 600px;
+  
+  .login-form {
+    align-self: center;
+    background: rgba(60, 60, 60, 0.6);
+    padding: 30px 40px;
+    border-radius: 3px;
+    color: $text-color;
+
+    h2 { font-weight: 300; }
+    label { font-weight: normal; }
+    a { color: $text-color; }
+  }
+
+  .heading {
+    text-align: center;
+  }
+
+  form {
+    .input-group.top {
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .input-group {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+
+      &:last-of-type {
+        border-top: none;
+      }
+
+      span {
+        background: transparent;
+        min-width: 53px;
+        border: none;
+
+        i {
+          font-size: 1.5em;
+          color: rgba(255, 255, 255, 0.5);
+        }
+      }
+    }
+
+    input.form-control {
+      @include normalize-input;
+
+      padding: 10px;
+      font-size: 1.3em;
+      width: 100%;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.8);
+
+      &:focus {
+        border: none;
+      }
+    }
+
+    .field {
+      margin-top: 10px;
+    }
+
+    .button {
+      margin: 10px 0;
+      background: $button-background-color;
+      border: none;
+      font-size: 1.6em;
+      font-weight: 300;
+      padding: 5px 0;
+      width: 100%;
+      border-radius: 3px;
+      color: lighten($button-background-color, 40%);
+
+      &:hover {
+        background: darken($button-background-color, 2%);
+      }
+    }
+  }
+}
+

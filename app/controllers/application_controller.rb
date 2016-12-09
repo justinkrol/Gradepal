@@ -9,4 +9,9 @@ class ApplicationController < ActionController::Base
       type.all { render nothing: true, status: 404 }
     end
   end
+
+  private
+  def after_sign_out_path_for(user)
+    new_user_session_path
+  end
 end
