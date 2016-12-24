@@ -1,1 +1,4 @@
-json.call(course, :id, :name, :code, :user_id)
+json.id course.id
+json.name course.name
+json.code course.code
+json.components course.components, partial: 'components/component', as: :component

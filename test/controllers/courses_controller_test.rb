@@ -21,6 +21,19 @@ class CoursesControllerTest < ActionController::TestCase
     assert_equal 4, courses.size
   end
 
+  test "#index returns child components and grades of a course" do
+    @user.courses.first.components.create!(name: 'Tests', weight: 20).grades.create!(name: 'Test 1', score: 10, max: 10)
+
+        get :index,
+      format: :json
+
+    assert_response 200
+    assert courses = JSON.parse(@response.body)
+    course = courses.first
+    assert_equal 1, course["components"].count
+    assert_equal 1, course["components"].first["grades"].count
+  end
+
   # SHOW
   test "#show returns the correct course with the correct attributes when the course exists" do
     new_course = @user.courses.create!(code: 'MATH 1004', name: 'Calculus 1')
