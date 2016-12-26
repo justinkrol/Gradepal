@@ -1,21 +1,11 @@
 (function () {
   angular.module('gradepal.main.controllers').controller('CoursesCtrl', CoursesCtrl);
 
-  CoursesCtrl.$inject = ['$scope', '$routeParams', '$location', '$resource', '$filter', 'flash'];
+  CoursesCtrl.$inject = ['$scope', '$routeParams', '$location', '$http', '$resource', '$filter', 'flash'];
 
-  function CoursesCtrl($scope, $routeParams, $location, $resource, $filter, flash) {
-    var Course = $resource('/courses/:courseId', {courseId: '@id', format: 'json' },
-      {
-        'delete': {method: 'DELETE'},
-        'create': {method: 'POST'},
-        'save': {method: 'PUT'}
-      });
-
+  function CoursesCtrl($scope, $routeParams, $location, $http, $resource, $filter, flash) {
     var ctrl = this;
 
-    /**
-     * Initial function. Update the course list
-     */
     ctrl.init = function () {
       ctrl.updateList();
     }
@@ -30,17 +20,12 @@
     }
 
     ctrl.updateList = function () {
-      if ($routeParams.keywords) {
-        Course.query({keywords: $routeParams.keywords}, function (results) {ctrl.courses = results;});
-      }
-      else {
-        Course.query(function (results) {
-          ctrl.courses = results.sort(function (a,b) {
-            return a.id - b.id;
-          });
-          ctrl.activeCourse = ctrl.courses[0];
+      $http.get('/courses', {params: {format:'json'}}).then(function(results) {
+        ctrl.courses = results.data.sort(function (a,b) {
+          return a.id - b.id;
         });
-      }
+        ctrl.activeCourse = ctrl.courses[0];
+      });
       // ctrl.addingCourse = false;
     }
 

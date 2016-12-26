@@ -23,8 +23,7 @@ class CoursesControllerTest < ActionController::TestCase
 
   test "#index returns child components and grades of a course" do
     @user.courses.first.components.create!(name: 'Tests', weight: 20).grades.create!(name: 'Test 1', score: 10, max: 10)
-
-        get :index,
+    get :index,
       format: :json
 
     assert_response 200
