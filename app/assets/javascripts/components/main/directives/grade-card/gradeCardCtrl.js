@@ -1,16 +1,9 @@
 (function () {
   angular.module('gradepal.main.controllers').controller('GradeCardCtrl', GradeCardCtrl);
 
-  GradeCardCtrl.$inject = ['$scope', '$resource', 'flash'];
+  GradeCardCtrl.$inject = ['$scope', '$http', 'flash'];
 
-  function GradeCardCtrl($scope, $resource, flash) {
-    var Grade = $resource('grades/:gradeId', {gradeId: '@id', format: 'json' },
-      {
-        'delete': {method: 'DELETE'},
-        'create': {method: 'POST'},
-        'save': {method: 'PUT'}
-      });
-
+  function GradeCardCtrl($scope, $http, flash) {
     var ctrl = this;
     ctrl.editing = false;
 
@@ -35,10 +28,9 @@
 
     ctrl.delete = function () {
       console.log('Deleting grade with id: ' + ctrl.grade.id);
-      ctrl.grade.$delete({gradeId: ctrl.grade.id}, function(){
-        $scope.$destroy();}
-      );
-
+      $http.delete('/grades/'+ ctrl.grade.id).then(function(){
+        $scope.$destroy();
+      });
     }
 
     ctrl.save = function () {
@@ -59,25 +51,18 @@
       ctrl.editing = false; // successful, so close dialog
 
       if(ctrl.grade.id) { // This is an existing grade if it already has an id; editing, not creating
-        ctrl.grade.$save({gradeId: ctrl.grade.id},
-          (function() {
-            console.log('Updated grade with id ' + ctrl.grade.id);
-          }),
-          onError
-        );
+        $http.put('/grades/'+ctrl.grade.id, ctrl.grade, {params: {format: 'json'}}).then(function(){
+          console.log('Updated grade with id: ' + ctrl.grade.id);
+        });
       }
       else { // This is a new grade if it does not have an id
         ctrl.grade.component_id = $scope.gpComponentCtrl.component.id;
-        Grade.create(ctrl.grade, (
-          function (createdGrade) {
-            // flash.success = "Grade created successfully"
-            ctrl.grade = createdGrade;
-            console.log('Created grade with id: ' + ctrl.grade.id);
-            $scope.gpComponentCtrl.getGrades();
-            $scope.gpComponentCtrl.addingGrade = false;
-          }),
-            onError
-        );
+        $http.post('/grades', ctrl.grade, {params: {format: 'json'}}).then(function(results){
+          ctrl.grade = results.data;
+          console.log('Created grade with id: ' + ctrl.grade.id);
+          $scope.gpComponentCtrl.getGrades();
+          $scope.gpComponentCtrl.addingGrade = false;
+        });
       }
     }
 

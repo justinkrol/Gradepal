@@ -1,22 +1,9 @@
 (function () {
   angular.module('gradepal.main.controllers').controller('ComponentCardCtrl', ComponentCardCtrl);
 
-  ComponentCardCtrl.$inject = ['$scope', '$resource', 'flash'];
+  ComponentCardCtrl.$inject = ['$scope', '$http', 'flash'];
 
-  function ComponentCardCtrl($scope, $resource, flash) {
-    var Component = $resource('components/:componentId', {componentId: '@id', format: 'json' },
-      {
-        'delete': {method: 'DELETE'},
-        'create': {method: 'POST'},
-        'save': {method: 'PUT'}
-      });
-    var Grade = $resource('grades/:gradeId', {gradeId: '@id', format: 'json' },
-      {
-        'delete': {method: 'DELETE'},
-        'create': {method: 'POST'},
-        'save': {method: 'PUT'}
-      });
-
+  function ComponentCardCtrl($scope, $http, flash) {
     var ctrl = this;
     ctrl.editing = false;
 
@@ -39,8 +26,8 @@
 
     ctrl.getGrades = function () {
       if(ctrl.component.id) {
-        Grade.query({component_id: ctrl.component.id}, function (results) {
-          ctrl.component.grades = results.sort(function (a,b) {
+        $http.get('/grades', {params: {component_id: ctrl.component.id, format:'json'}}).then(function(results){
+          ctrl.component.grades = results.data.sort(function (a,b) {
             return a.id - b.id;
           });
         });
@@ -55,10 +42,9 @@
 
     ctrl.delete = function () {
       console.log('Deleting component with id: ' + ctrl.component.id);
-      ctrl.component.$delete({componentId: ctrl.component.id}, function(){
-        $scope.$destroy();}
-      );
-
+      $http.delete('/components/'+ ctrl.component.id).then(function(){
+        $scope.$destroy();
+      });
     }
 
     ctrl.save = function () {
@@ -77,25 +63,18 @@
       ctrl.editing = false; // successful, so close dialog
 
       if(ctrl.component.id) { // This is an existing component if it already has an id; editing, not creating
-        ctrl.component.$save({componentId: ctrl.component.id},
-          (function() {
-            console.log('Updated component with id ' + ctrl.component.id);
-          }),
-          onError
-        );
+        $http.put('/components/'+ ctrl.component.id, ctrl.component, {params: {format:'json'}}).then(function(){
+          console.log('Updated component with id: ' + ctrl.component.id);
+        });
       }
       else { // This is a new component if it does not have an id
         ctrl.component.course_id = $scope.gpCourseId;
-        Component.create(ctrl.component, (
-          function (createdComponent) {
-            // flash.success = "Component created successfully"
-            ctrl.component = createdComponent;
-            console.log('Created component with id: ' + ctrl.component.id);
-            $scope.gpCourseCtrl.getComponents();
-            $scope.gpCourseCtrl.addingComponent = false;
-          }),
-            onError
-        );
+        $http.post('/components', ctrl.component, {params: {format:'json'}}).then(function(results){
+          ctrl.component = results.data;
+          console.log('Created component with id: ' + ctrl.component.id);
+          $scope.gpCourseCtrl.getComponents();
+          $scope.gpCourseCtrl.addingComponent = false;
+        });
       }
     }
 
