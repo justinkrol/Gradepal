@@ -24,6 +24,14 @@
       ctrl.isSelected = !ctrl.isSelected;
     }
 
+    ctrl.removeGrade = function (gradeId) {
+      ctrl.component.grades = ctrl.component.grades.filter(function(grade) { return grade.id != gradeId; });
+    }
+
+    ctrl.addGrade = function (grade) {
+      ctrl.component.grades.push(grade);
+    }
+
     ctrl.getGrades = function () {
       if(ctrl.component.id) {
         $http.get('/grades', {params: {component_id: ctrl.component.id, format:'json'}}).then(function(results){
@@ -45,6 +53,7 @@
       $http.delete('/components/'+ ctrl.component.id).then(function(){
         $scope.$destroy();
       });
+      $scope.gpCourseCtrl.removeComponent(ctrl.component.id);
     }
 
     ctrl.save = function () {
@@ -72,7 +81,7 @@
         $http.post('/components', ctrl.component, {params: {format:'json'}}).then(function(results){
           ctrl.component = results.data;
           console.log('Created component with id: ' + ctrl.component.id);
-          $scope.gpCourseCtrl.getComponents();
+          $scope.gpCourseCtrl.addComponent(results.data);
           $scope.gpCourseCtrl.addingComponent = false;
         });
       }

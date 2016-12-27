@@ -31,6 +31,7 @@
       $http.delete('/grades/'+ ctrl.grade.id).then(function(){
         $scope.$destroy();
       });
+      $scope.gpComponentCtrl.removeGrade(ctrl.grade.id);
     }
 
     ctrl.save = function () {
@@ -60,7 +61,7 @@
         $http.post('/grades', ctrl.grade, {params: {format: 'json'}}).then(function(results){
           ctrl.grade = results.data;
           console.log('Created grade with id: ' + ctrl.grade.id);
-          $scope.gpComponentCtrl.getGrades();
+          $scope.gpComponentCtrl.addGrade(results.data);
           $scope.gpComponentCtrl.addingGrade = false;
         });
       }
