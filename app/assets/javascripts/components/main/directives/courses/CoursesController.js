@@ -19,6 +19,14 @@
       // $location.path('/').search('keywords', keywords);
     }
 
+    ctrl.removeCourse = function (courseId) {
+      ctrl.courses = ctrl.courses.filter(function(course) { return course.id != courseId; });
+    }
+
+    ctrl.addCourse = function (course) {
+      ctrl.courses.push(course);
+    }
+
     ctrl.updateList = function () {
       $http.get('/courses', {params: {format:'json'}}).then(function(results) {
         ctrl.courses = results.data.sort(function (a,b) {

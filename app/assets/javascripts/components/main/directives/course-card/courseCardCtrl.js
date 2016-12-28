@@ -13,6 +13,14 @@
       ctrl.getComponents();
     }
 
+    ctrl.removeComponent = function (componentId) {
+      $scope.gpCourse.components = $scope.gpCourse.components.filter(function(component) { return component.id != componentId; });
+    }
+
+    ctrl.addComponent = function (component) {
+      $scope.gpCourse.components.push(component);
+    }
+
     ctrl.getComponents = function () {
       if($scope.gpCourse && $scope.gpCourse.id) {
         $http.get('/components', {params: {course_id: $scope.gpCourse.id, format:'json'}}).then(function(results){
@@ -40,8 +48,10 @@
 
     ctrl.delete = function () {
       console.log('Deleting course with id: ' + $scope.gpCourse.id);
-      $http.delete('/courses/'+ $scope.gpCourse.id);
-      $scope.gpParentCtrl.updateList();
+      $http.delete('/courses/'+ $scope.gpCourse.id).then(function(){
+        $scope.$destroy();
+      });
+      $scope.gpParentCtrl.removeCourse($scope.gpCourse.id);
     }
 
     ctrl.save = function () {
@@ -68,7 +78,7 @@
         $http.post('/courses', $scope.gpCourse, {params: {format:'json'}}).then(function(results){
           $scope.gpCourse = results.data;
           console.log('Created course with id: ' + $scope.gpCourse.id);
-          $scope.gpParentCtrl.updateList();
+          $scope.gpParentCtrl.addCourse(results.data);
           $scope.gpParentCtrl.addingCourse = false;
         });
       }
