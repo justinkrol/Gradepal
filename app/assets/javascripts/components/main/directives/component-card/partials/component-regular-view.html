@@ -1,6 +1,9 @@
 <span style="margin-top: 0">
   {{ctrl.component.name + " [" + ctrl.component.weight + "%]"}}
 </span>
+<span style="color: green">
+  ({{ctrl.average()}})
+</span>
 <div style="display: inline-block" class="pull-right">
   <a href ng-click="ctrl.edit()">Edit</a>
   <a href ng-click="ctrl.delete()">Delete</a>

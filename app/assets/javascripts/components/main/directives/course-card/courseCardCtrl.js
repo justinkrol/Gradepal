@@ -97,6 +97,38 @@
       $scope.gpParentCtrl.addingCourse = false;
     }
 
+    ctrl.average = function () {
+      if($scope.gpCourse.components.length > 0) {
+        var componentAverages = [];
+        $scope.gpCourse.components.forEach(function(component) { 
+          avg = componentAverage(component.grades)
+          if(avg){
+            componentAverages.push(avg)
+          }
+        });
+
+        if(componentAverages.length > 0){
+          return (componentAverages.reduce(function(a,b) {return a + b;}, 0) / componentAverages.length).toFixed(1) + '%';
+        }
+        else{
+          return 'No grades'
+        }
+      }
+      else{
+        return 'No components';
+      }
+    }
+
+    var componentAverage = function (grades) {
+      if (grades.length > 0) {
+        return (grades.reduce(function(a,b) {return a + (b.score / b.max);}, 0) * 100
+          / grades.length);
+      }
+      else {
+        return null;
+      }
+    }
+
     ctrl.init();
   }
 
