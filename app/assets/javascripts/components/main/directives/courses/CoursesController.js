@@ -10,15 +10,6 @@
       ctrl.updateList();
     }
 
-    ctrl.search = function (keywords) {
-      console.log(keywords);
-      var course = ctrl.courses.find((course) => course.code === keywords.split(' -')[0]);
-      if (course){
-        ctrl.setActiveCourse(course);
-      }
-      // $location.path('/').search('keywords', keywords);
-    }
-
     ctrl.removeCourse = function (courseId) {
       ctrl.courses = ctrl.courses.filter(function(course) { return course.id != courseId; });
     }
