@@ -1,6 +1,9 @@
 <span>
   {{gpCourse.code + " - " + gpCourse.name}}
 </span>
+<span style="color: green">
+  ({{ctrl.average()}})
+</span>
 <div class="pull-right">
   <button ng-click="ctrl.edit()" class="btn btn-info">Edit</button>
   <button ng-click="ctrl.delete()" class="btn btn-danger">Delete</button>
