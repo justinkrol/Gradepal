@@ -23,7 +23,7 @@
     <gp-course-card ng-if="ctrl.addingCourse" gp-parent-ctrl="ctrl" gp-course="{}" gp-editing="true"></gp-course-card>
   </aside>
   <article class="main">
-    <section ng-if="ctrl.courses">
+    <section ng-if="ctrl.courses.length > 0">
       <gp-course-card gp-parent-ctrl="ctrl" gp-course="ctrl.activeCourse" gp-editing="false"></gp-course-card>
     </section>
   </article>

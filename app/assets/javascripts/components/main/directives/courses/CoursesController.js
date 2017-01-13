@@ -12,10 +12,12 @@
 
     ctrl.removeCourse = function (courseId) {
       ctrl.courses = ctrl.courses.filter(function(course) { return course.id != courseId; });
+      ctrl.setActiveCourse(ctrl.courses[0]);
     }
 
     ctrl.addCourse = function (course) {
       ctrl.courses.push(course);
+      ctrl.setActiveCourse(course);
     }
 
     ctrl.updateList = function () {
@@ -34,9 +36,11 @@
     }
 
     ctrl.setActiveCourse = function (course) {
-      ctrl.activeCourse = course;
-      $scope.keywords = course.code + ' - ' + course.name;
-      console.log('Set active course to '+course.code+' - '+course.name);
+      if(course){
+        ctrl.activeCourse = course;
+        $scope.keywords = course.code + ' - ' + course.name;
+        console.log('Set active course to '+course.code+' - '+course.name);
+      } 
     }
 
     // view, edit, and delete functions are in course-card directive now

@@ -99,7 +99,7 @@
     }
 
     ctrl.average = function () {
-      if (ctrl.component.grades.length > 0) {
+      if (ctrl.component.grades && ctrl.component.grades.length > 0) {
         return ((ctrl.component.grades.reduce(function(a,b) {return a + (b.score / b.max);}, 0) * 100
           / ctrl.component.grades.length)).toFixed(1) + '%';
       }

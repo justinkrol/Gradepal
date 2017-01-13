@@ -49,9 +49,8 @@
     ctrl.delete = function () {
       console.log('Deleting course with id: ' + $scope.gpCourse.id);
       $http.delete('/courses/'+ $scope.gpCourse.id).then(function(){
-        $scope.$destroy();
+        $scope.gpParentCtrl.removeCourse($scope.gpCourse.id);
       });
-      $scope.gpParentCtrl.removeCourse($scope.gpCourse.id);
     }
 
     ctrl.save = function () {
@@ -98,7 +97,7 @@
     }
 
     ctrl.average = function () {
-      if($scope.gpCourse.components.length > 0) {
+      if($scope.gpCourse.components && $scope.gpCourse.components.length > 0) {
         var componentAverages = [];
         $scope.gpCourse.components.forEach(function(component) { 
           avg = componentAverage(component.grades)
