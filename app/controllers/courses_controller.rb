@@ -30,6 +30,6 @@ class CoursesController < AuthenticatedController
 
   private
   def course_params
-    params.require(:course).permit(:name, :code, :user_id)
+    params.require(:course).permit(:name, :code)
   end
 end
