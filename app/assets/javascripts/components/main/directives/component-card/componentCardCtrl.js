@@ -49,11 +49,13 @@
     }
 
     ctrl.delete = function () {
-      console.log('Deleting component with id: ' + ctrl.component.id);
-      $http.delete('/components/'+ ctrl.component.id).then(function(){
-        $scope.$destroy();
-      });
-      $scope.gpCourseCtrl.removeComponent(ctrl.component.id);
+      if(window.confirm("Are you sure you want to delete '" + ctrl.component.name + "'?")){
+        console.log('Deleting component with id: ' + ctrl.component.id);
+        $http.delete('/components/'+ ctrl.component.id).then(function(){
+          $scope.$destroy();
+        });
+        $scope.gpCourseCtrl.removeComponent(ctrl.component.id);
+      }
     }
 
     ctrl.save = function () {
