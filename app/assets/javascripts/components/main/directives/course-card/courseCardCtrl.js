@@ -47,10 +47,12 @@
     }
 
     ctrl.delete = function () {
-      console.log('Deleting course with id: ' + $scope.gpCourse.id);
-      $http.delete('/courses/'+ $scope.gpCourse.id).then(function(){
-        $scope.gpParentCtrl.removeCourse($scope.gpCourse.id);
-      });
+      if(window.confirm("Are you sure you want to delete '" + $scope.gpCourse.code + " - " + $scope.gpCourse.name + "'?")){
+        console.log('Deleting course with id: ' + $scope.gpCourse.id);
+        $http.delete('/courses/'+ $scope.gpCourse.id).then(function(){
+          $scope.gpParentCtrl.removeCourse($scope.gpCourse.id);
+        });
+      }
     }
 
     ctrl.save = function () {
