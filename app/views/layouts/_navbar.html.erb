@@ -9,7 +9,7 @@
           <span class="icon-bar"></span>
         </button>
         <%= image_tag "fox_icon_no_bg.png", class: "brand-image" %>
-        <%= link_to "GradePal", root_path, :class => "navbar-brand pull-right"%>
+        <%= link_to "GradePal", user_signed_in? ? authenticated_root_path : unauthenticated_root_path, :class => "navbar-brand pull-right"%>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul id="right-navbar" class="nav navbar-nav pull-right">
