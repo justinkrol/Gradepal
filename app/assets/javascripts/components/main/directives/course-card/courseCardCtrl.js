@@ -43,6 +43,7 @@
 
     ctrl.edit = function () {
       ctrl.editing = true;
+      ctrl.temp = {code: $scope.gpCourse.code, name: $scope.gpCourse.name};
       console.log('Editing course with id: ' + $scope.gpCourse.id);
     }
 
@@ -82,12 +83,9 @@
 
     ctrl.cancel = function () {
       console.log('Cancelling edit');
-      if($scope.gpCourse && $scope.gpCourse.id) { // existing course
-        console.log('Cancel changes to course');
-        Course.get({courseId: $scope.gpCourse.id}, function (result) {
-          console.log(result);
-          $scope.gpCourse = result;
-        });
+      if($scope.gpCourse && $scope.gpCourse.id && ctrl.temp) { // existing course
+        $scope.gpCourse.code = ctrl.temp.code;
+        $scope.gpCourse.name = ctrl.temp.name;
       }
       ctrl.editing = false;
       $scope.gpParentCtrl.addingCourse = false;
