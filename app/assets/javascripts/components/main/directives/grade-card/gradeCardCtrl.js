@@ -1,9 +1,9 @@
 (function () {
   angular.module('gradepal.main.controllers').controller('GradeCardCtrl', GradeCardCtrl);
 
-  GradeCardCtrl.$inject = ['$scope', '$http', 'flash'];
+  GradeCardCtrl.$inject = ['$scope', '$http', 'flashService'];
 
-  function GradeCardCtrl($scope, $http, flash) {
+  function GradeCardCtrl($scope, $http, flashService) {
     var ctrl = this;
     ctrl.editing = false;
 
@@ -38,31 +38,26 @@
       ctrl.grade.max = parseInt(ctrl.grade.fullScore.split('/')[1]);
       ctrl.grade.score = parseInt(ctrl.grade.fullScore.split('/')[0]);
       console.log('Saving grade with name: ' + ctrl.grade.name + ', score: ' + ctrl.grade.score + ', max: ' + ctrl.grade.max);
-      var onError = function (_httpResponse) {
-        flash.error = 'Something went wrong';
-      }
-      if (!ctrl.grade.name) { // bad input
-        flash.error = 'Please enter a name for the grade';
-        return;
-      }
-      if (!ctrl.grade.fullScore) { // bad input
-        flash.error = 'Please enter a score for the grade';
-        return;
-      }
-      ctrl.editing = false; // successful, so close dialog
-
-      if(ctrl.grade.id) { // This is an existing grade if it already has an id; editing, not creating
+      // Existing grade
+      if(ctrl.grade.id) {
         $http.put('/grades/'+ctrl.grade.id, ctrl.grade, {params: {format: 'json'}}).then(function(){
           console.log('Updated grade with id: ' + ctrl.grade.id);
+          ctrl.editing = false;
+        }, function(results){
+          flashService.showErrors(results.data.errors);
         });
       }
-      else { // This is a new grade if it does not have an id
+      // New grade
+      else {
         ctrl.grade.component_id = $scope.gpComponentCtrl.component.id;
         $http.post('/grades', ctrl.grade, {params: {format: 'json'}}).then(function(results){
           ctrl.grade = results.data;
           console.log('Created grade with id: ' + ctrl.grade.id);
           $scope.gpComponentCtrl.addGrade(results.data);
           $scope.gpComponentCtrl.addingGrade = false;
+          ctrl.editing = false;
+        }, function(results){
+          flashService.showErrors(results.data.errors);
         });
       }
     }

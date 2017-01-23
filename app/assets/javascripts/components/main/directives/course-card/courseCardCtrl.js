@@ -1,9 +1,9 @@
 (function () {
   angular.module('gradepal.main.controllers').controller('CourseCardCtrl', CourseCardCtrl);
 
-  CourseCardCtrl.$inject = ['$scope', '$http', 'flash'];
+  CourseCardCtrl.$inject = ['$scope', '$http', 'flashService'];
 
-  function CourseCardCtrl($scope, $http, flash) {
+  function CourseCardCtrl($scope, $http, flashService) {
     var ctrl = this;
     ctrl.editing = false;
 
@@ -57,30 +57,25 @@
 
     ctrl.save = function () {
       console.log('Saving course with code: ' + $scope.gpCourse.code + ', name: ' + $scope.gpCourse.name);
-      var onError = function (_httpResponse) {
-        flash.error = 'Something went wrong';
-      }
-      if (!$scope.gpCourse.code) { // bad input
-        flash.error = 'Please enter a code for the course';
-        return;
-      }
-      if (!$scope.gpCourse.name) { // bad input
-        flash.error = 'Please enter a name for the course';
-        return;
-      }
-      ctrl.editing = false; // successful, so close dialog
-
-      if($scope.gpCourse && $scope.gpCourse.id) { // This is an existing course if it already has an id; editing, not creating
+      // Existing course
+      if($scope.gpCourse && $scope.gpCourse.id) {
         $http.put('/courses/'+ $scope.gpCourse.id, $scope.gpCourse, {params: {format:'json'}}).then(function(){
           console.log('Updated course with id ' + $scope.gpCourse.id);
+          ctrl.editing = false;
+        }, function(results){
+          flashService.showErrors(results.data.errors);
         });
       }
-      else { // This is a new course if it does not have an id
+      // New course
+      else {
         $http.post('/courses', $scope.gpCourse, {params: {format:'json'}}).then(function(results){
           $scope.gpCourse = results.data;
           console.log('Created course with id: ' + $scope.gpCourse.id);
           $scope.gpParentCtrl.addCourse(results.data);
           $scope.gpParentCtrl.addingCourse = false;
+          ctrl.editing = false;
+        }, function(results) {
+          flashService.showErrors(results.data.errors);
         });
       }
     }

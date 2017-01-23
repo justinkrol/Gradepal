@@ -12,19 +12,24 @@ class CoursesController < AuthenticatedController
 
   def create
     @course = current_user.courses.new(course_params)
-    @course.save
-    render 'show', status: 201
+    if @course.save
+      render 'show', status: 201
+    else
+      render json: { errors: @course.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def update
-    course = current_user.courses.find(params[:id])
-    course.update_attributes(course_params)
-    head :no_content
+    course = Course.find(params[:id])
+    if course.update(course_params)
+      head :no_content
+    else
+      render json: { errors: course.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    course = current_user.courses.find(params[:id])
-    course.destroy
+    current_user.courses.find(params[:id]).destroy
     head :no_content
   end
 

@@ -10,7 +10,7 @@
       </div>
     </div>
   </div>
-  <gp-component-card ng-if="ctrl.addingComponent" gp-course-ctrl="ctrl" gp-course-id="gpCourse.id" gp-editing="true"></gp-component-card>
+  <gp-component-card ng-if="ctrl.addingComponent" gp-course-ctrl="ctrl" gp-course-id="gpCourse.id" gp-component="{name: '', weight: ''}" gp-editing="true"></gp-component-card>
   <button id="newComponentButton{{gpCourse.id}}" ng-if="!ctrl.addingComponent && gpCourse.id" ng-click="ctrl.showNewComponent()" type="button" class="btn btn-default">
     &plus; Add a component
   </button>

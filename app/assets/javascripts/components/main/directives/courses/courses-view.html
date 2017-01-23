@@ -20,7 +20,7 @@
     <div class="sidebar-header">
       <button id="newCourseButton" ng-if="!ctrl.addingCourse" ng-click="ctrl.showNewCourse()" type="button" class="btn btn-default">&plus; Add a course</button>
     </div>
-    <gp-course-card ng-if="ctrl.addingCourse" gp-parent-ctrl="ctrl" gp-course="{}" gp-editing="true"></gp-course-card>
+    <gp-course-card ng-if="ctrl.addingCourse" gp-parent-ctrl="ctrl" gp-course="{code: '', name: ''}" gp-editing="true"></gp-course-card>
   </aside>
   <article class="main">
     <section ng-if="ctrl.courses.length > 0">

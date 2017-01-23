@@ -5,7 +5,6 @@ class ComponentsController < AuthenticatedController
   def index
     @course = current_user.courses.find(params[:course_id])
     @components = @course.components
-    # @components = Component.where(course_id: params[:course_id]).take
   end
 
   def show
@@ -13,35 +12,31 @@ class ComponentsController < AuthenticatedController
   end
 
   def create
-    # debugger
     @course = current_user.courses.find(params[:course_id])
-    # debugger
-    @component = @course.components.create(component_params)
-    render 'show', status: 201
-
-    # @component = Component.new(params.require(:component).permit(:name, :weight, :course_id)))
-    # @component.save
-    # render 'show', status: 201
+    @component = @course.components.new(component_params)
+    if @component.save
+      render 'show', status: 201
+    else
+      render json: { errors: @component.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def update
-    @component = Component.find(params[:id])
-		@component.update(component_params)
-
-    # component = Component.find(params[:id])
-    # component.update_attributes(params.require(:component).permit(:name, :weight))
-    head :no_content
+    component = Component.find(params[:id])
+		if component.update(component_params)
+      head :no_content
+    else
+      render json: { errors: component.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    component = Component.find(params[:id])
-    component.destroy
+    Component.find(params[:id]).destroy
     head :no_content
   end
 
   private
-		def component_params
-			params.require(:component).permit(:name, :weight, :course_id)
-		end
-
+	def component_params
+		params.require(:component).permit(:name, :weight, :course_id)
+	end
 end
