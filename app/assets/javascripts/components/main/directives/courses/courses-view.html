@@ -1,9 +1,10 @@
 <div class="wrapper">
   <header class="header">
     <aside class="flash row">
-      <article flash-alert duration="0" active-class="alert" class="col-md-10 col-md-offset-1">
+      <div flash-alert duration="3500" active-class="in alert" class="fade">
+        <button type="button" class="close" ng-click="hide()">&times;</button>
         {{flash.message}}
-      </article>
+      </div>
     </aside>
   </header>
   <aside class="aside sidebar">
@@ -20,7 +21,7 @@
     <div class="sidebar-header">
       <button id="newCourseButton" ng-if="!ctrl.addingCourse" ng-click="ctrl.showNewCourse()" type="button" class="btn btn-default">&plus; Add a course</button>
     </div>
-    <gp-course-card ng-if="ctrl.addingCourse" gp-parent-ctrl="ctrl" gp-course="{}" gp-editing="true"></gp-course-card>
+    <gp-course-card ng-if="ctrl.addingCourse" gp-parent-ctrl="ctrl" gp-course="{code: '', name: ''}" gp-editing="true"></gp-course-card>
   </aside>
   <article class="main">
     <section ng-if="ctrl.courses.length > 0">

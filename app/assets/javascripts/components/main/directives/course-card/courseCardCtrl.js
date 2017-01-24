@@ -1,9 +1,9 @@
 (function () {
   angular.module('gradepal.main.controllers').controller('CourseCardCtrl', CourseCardCtrl);
 
-  CourseCardCtrl.$inject = ['$scope', '$http', 'flash'];
+  CourseCardCtrl.$inject = ['$scope', '$http', 'flashService'];
 
-  function CourseCardCtrl($scope, $http, flash) {
+  function CourseCardCtrl($scope, $http, flashService) {
     var ctrl = this;
     ctrl.editing = false;
 
@@ -43,6 +43,7 @@
 
     ctrl.edit = function () {
       ctrl.editing = true;
+      ctrl.temp = {code: $scope.gpCourse.code, name: $scope.gpCourse.name};
       console.log('Editing course with id: ' + $scope.gpCourse.id);
     }
 
@@ -51,48 +52,43 @@
         console.log('Deleting course with id: ' + $scope.gpCourse.id);
         $http.delete('/courses/'+ $scope.gpCourse.id).then(function(){
           $scope.gpParentCtrl.removeCourse($scope.gpCourse.id);
+          flashService.message('error', 'Deleted course: ' + courseFullName());
         });
       }
     }
 
     ctrl.save = function () {
       console.log('Saving course with code: ' + $scope.gpCourse.code + ', name: ' + $scope.gpCourse.name);
-      var onError = function (_httpResponse) {
-        flash.error = 'Something went wrong';
-      }
-      if (!$scope.gpCourse.code) { // bad input
-        flash.error = 'Please enter a code for the course';
-        return;
-      }
-      if (!$scope.gpCourse.name) { // bad input
-        flash.error = 'Please enter a name for the course';
-        return;
-      }
-      ctrl.editing = false; // successful, so close dialog
-
-      if($scope.gpCourse && $scope.gpCourse.id) { // This is an existing course if it already has an id; editing, not creating
+      // Existing course
+      if($scope.gpCourse && $scope.gpCourse.id) {
         $http.put('/courses/'+ $scope.gpCourse.id, $scope.gpCourse, {params: {format:'json'}}).then(function(){
           console.log('Updated course with id ' + $scope.gpCourse.id);
+          ctrl.editing = false;
+          flashService.message('success', 'Successfully saved course: ' + courseFullName());
+        }, function(results){
+          flashService.errors(results.data.errors);
         });
       }
-      else { // This is a new course if it does not have an id
+      // New course
+      else {
         $http.post('/courses', $scope.gpCourse, {params: {format:'json'}}).then(function(results){
           $scope.gpCourse = results.data;
           console.log('Created course with id: ' + $scope.gpCourse.id);
           $scope.gpParentCtrl.addCourse(results.data);
           $scope.gpParentCtrl.addingCourse = false;
+          ctrl.editing = false;
+          flashService.message('success', 'Successfully saved course: ' + courseFullName());
+        }, function(results) {
+          flashService.errors(results.data.errors);
         });
       }
     }
 
     ctrl.cancel = function () {
       console.log('Cancelling edit');
-      if($scope.gpCourse && $scope.gpCourse.id) { // existing course
-        console.log('Cancel changes to course');
-        Course.get({courseId: $scope.gpCourse.id}, function (result) {
-          console.log(result);
-          $scope.gpCourse = result;
-        });
+      if($scope.gpCourse && $scope.gpCourse.id && ctrl.temp) { // existing course
+        $scope.gpCourse.code = ctrl.temp.code;
+        $scope.gpCourse.name = ctrl.temp.name;
       }
       ctrl.editing = false;
       $scope.gpParentCtrl.addingCourse = false;
@@ -118,6 +114,10 @@
       else{
         return 'No components';
       }
+    }
+
+    var courseFullName = function() {
+      return $scope.gpCourse.code + ' - ' + $scope.gpCourse.name;
     }
 
     var componentAverage = function (grades) {
