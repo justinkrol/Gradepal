@@ -29,9 +29,10 @@
     ctrl.delete = function () {
       console.log('Deleting grade with id: ' + ctrl.grade.id);
       $http.delete('/grades/'+ ctrl.grade.id).then(function(){
+        $scope.gpComponentCtrl.removeGrade(ctrl.grade.id);
         $scope.$destroy();
+        flashService.message('error', 'Deleted grade: ' + ctrl.grade.name);
       });
-      $scope.gpComponentCtrl.removeGrade(ctrl.grade.id);
     }
 
     ctrl.save = function () {
@@ -43,8 +44,9 @@
         $http.put('/grades/'+ctrl.grade.id, ctrl.grade, {params: {format: 'json'}}).then(function(){
           console.log('Updated grade with id: ' + ctrl.grade.id);
           ctrl.editing = false;
+          flashService.message('success', 'Successfully saved grade: ' + ctrl.grade.name);
         }, function(results){
-          flashService.showErrors(results.data.errors);
+          flashService.errors(results.data.errors);
         });
       }
       // New grade
@@ -56,8 +58,9 @@
           $scope.gpComponentCtrl.addGrade(results.data);
           $scope.gpComponentCtrl.addingGrade = false;
           ctrl.editing = false;
+          flashService.message('success', 'Successfully saved grade: ' + ctrl.grade.name);
         }, function(results){
-          flashService.showErrors(results.data.errors);
+          flashService.errors(results.data.errors);
         });
       }
     }

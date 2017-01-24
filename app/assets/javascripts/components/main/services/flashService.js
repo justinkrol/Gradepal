@@ -4,8 +4,27 @@
   flashService.$inject = ['flash'];
 
   function flashService(flash) {
-      this.showErrors = function (errors) {
-        flash.error = errors.join(', ');
+
+    var STREAMS = {
+      error: 'error',
+      success: 'success',
+      warning: 'warning',
+      info: 'info'
+    }
+
+    var clearStreams = function() {
+      for (stream in STREAMS) {
+        flash[stream] = '';
       }
+    }
+
+    this.message = function(stream = STREAMS.info, message){
+      clearStreams();
+      flash[stream] = message;
+    }
+
+    this.errors = function (errors) {
+      this.message(STREAMS.error, errors.join(', '));
+    }
   }
 })();

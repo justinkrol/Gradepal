@@ -52,9 +52,10 @@
       if(window.confirm("Are you sure you want to delete '" + ctrl.component.name + "'?")){
         console.log('Deleting component with id: ' + ctrl.component.id);
         $http.delete('/components/'+ ctrl.component.id).then(function(){
+          $scope.gpCourseCtrl.removeComponent(ctrl.component.id);
+          flashService.message('error', 'Deleted component: ' + ctrl.component.name);
           $scope.$destroy();
         });
-        $scope.gpCourseCtrl.removeComponent(ctrl.component.id);
       }
     }
 
@@ -65,8 +66,9 @@
         $http.put('/components/'+ ctrl.component.id, ctrl.component, {params: {format:'json'}}).then(function(){
           console.log('Updated component with id: ' + ctrl.component.id);
           ctrl.editing = false;
+          flashService.message('success', 'Successfully saved component: ' + ctrl.component.name);
         }, function(results){
-          flashService.showErrors(results.data.errors);
+          flashService.errors(results.data.errors);
         });
       }
       // New component
@@ -78,8 +80,9 @@
           $scope.gpCourseCtrl.addComponent(results.data);
           $scope.gpCourseCtrl.addingComponent = false;
           ctrl.editing = false;
+          flashService.message('success', 'Successfully saved component: ' + ctrl.component.name);
         }, function(results){
-          flashService.showErrors(results.data.errors);
+          flashService.errors(results.data.errors);
         });
       }
     }

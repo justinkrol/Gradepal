@@ -52,6 +52,7 @@
         console.log('Deleting course with id: ' + $scope.gpCourse.id);
         $http.delete('/courses/'+ $scope.gpCourse.id).then(function(){
           $scope.gpParentCtrl.removeCourse($scope.gpCourse.id);
+          flashService.message('error', 'Deleted course: ' + courseFullName());
         });
       }
     }
@@ -63,8 +64,9 @@
         $http.put('/courses/'+ $scope.gpCourse.id, $scope.gpCourse, {params: {format:'json'}}).then(function(){
           console.log('Updated course with id ' + $scope.gpCourse.id);
           ctrl.editing = false;
+          flashService.message('success', 'Successfully saved course: ' + courseFullName());
         }, function(results){
-          flashService.showErrors(results.data.errors);
+          flashService.errors(results.data.errors);
         });
       }
       // New course
@@ -75,8 +77,9 @@
           $scope.gpParentCtrl.addCourse(results.data);
           $scope.gpParentCtrl.addingCourse = false;
           ctrl.editing = false;
+          flashService.message('success', 'Successfully saved course: ' + courseFullName());
         }, function(results) {
-          flashService.showErrors(results.data.errors);
+          flashService.errors(results.data.errors);
         });
       }
     }
@@ -111,6 +114,10 @@
       else{
         return 'No components';
       }
+    }
+
+    var courseFullName = function() {
+      return $scope.gpCourse.code + ' - ' + $scope.gpCourse.name;
     }
 
     var componentAverage = function (grades) {
