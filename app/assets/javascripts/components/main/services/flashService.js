@@ -18,7 +18,8 @@
       }
     }
 
-    this.message = function(stream = STREAMS.info, message){
+    this.message = function(stream, message){
+      stream = stream ? stream : 'info';
       clearStreams();
       flash[stream] = message;
     }
