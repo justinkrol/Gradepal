@@ -100,12 +100,18 @@
         $scope.gpCourse.components.forEach(function(component) { 
           avg = componentAverage(component.grades)
           if(avg){
-            componentAverages.push(avg)
+            componentAverages.push({average: avg, weight: component.weight})
           }
         });
 
         if(componentAverages.length > 0){
-          return (componentAverages.reduce(function(a,b) {return a + b;}, 0) / componentAverages.length).toFixed(1) + '%';
+          num = componentAverages.reduce(function(a,b) {
+            return a + (b.average * b.weight)
+          }, 0);
+          den = componentAverages.reduce(function(a,b) {
+            return a + b.weight
+          }, 0);
+          return (num/den).toFixed(1) + '%';
         }
         else{
           return 'No grades'
